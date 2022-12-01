@@ -22,6 +22,26 @@ data = sales.get_all_values()
 
 print(data)
 
+def my_print(message):
+    """
+    Return an custom print message
+    """
+    print(f"  {message} ")
+    print("______  __________")
+    print("      \/         ")
+    print("       \ ")
+    print("        \   ^__^")
+    print("         \  (oo)\_______")
+    print("            (__)\       )\/")
+    print("                ||----w |")
+    print("                ||     ||")
+
+
+
+
+
+
+
 def Calcul_time(time_start, time_end):
     """
     Return the time in second between time_start and time_end
@@ -34,15 +54,12 @@ def get_username():
     Get username to register into Excel file
     """
     while True:
-        print("######################################")
-        print("# Let\'s register your name           #")
-        print("# Max 12 caracters, cannot be empty! #")
-        print("######################################\n")
-
+        my_print("Let\'s register your name, Max 12 caracters, cannot be empty!")
         data_username = input("Enter your name here: \n")
         data_username = data_username.replace(" ", "")
         if validate_data(data_username):
-            print("Data is valid!")
+            
+            my_print("Data is valid!")
             break
 
     return data_username
@@ -56,21 +73,21 @@ def validate_data(values):
     try:
         if len(values) > 12:
             raise ValueError(
-                f"12 caracters max, you provided {len(values)}\n"
+                f"12 caracters max, you provided {len(values)}"
             )
         if len(values) == 0 :
             raise ValueError(
-                f"Empty name not allowed, provide a name please!\n"
+                f"Empty name, provide a name please"
             )            
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        my_print(f"Invalid data: {e}, please try again.\n")
         return False
 
     return True
 
 start = time.time()
 # time.sleep(1)
-print(get_username())
+my_print(get_username())
 end = time.time()
 time = Calcul_time(start, end)
-print(f"You finished the game in : {time} sec\n")
+my_print(f"You finished the game in : {time} sec\n")
