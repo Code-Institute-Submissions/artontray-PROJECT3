@@ -73,8 +73,25 @@ def choose_level(data_username):
     message += "2 for Hard, \n"
     message += "and 3 for Champion\n"
     my_print(message)
-    level_user = int(input("Enter your level : \n"))
+    while True:
+        try:
+            level_user = int(input("Enter your level : \n"))
+                
 
+            if level_user > 3: 
+                raise ValueError(
+                    print(f"Type 0, 1, 2 or 3")
+                )
+            else:  
+                break     
+        except Exception:
+            print("Error, Try Again!") 
+        else:
+            choose_level(data_username)    
+    return level_user
+
+
+            
 def get_username():
     """
     Get username to register into Excel file
@@ -84,7 +101,7 @@ def get_username():
         data_username = input("Enter your name here : \n")
         data_username = data_username.replace(" ", "")
         if validate_data(data_username):
-            choose_level(data_username)
+            return data_username
             break
 
     return data_username
@@ -112,7 +129,9 @@ def validate_data(values):
 
 start = time.time()
 # time.sleep(1)
-my_print(get_username())
+user_name = get_username()
+user_level = choose_level(user_name)
+my_print("your level is : " + str(user_level))
 end = time.time()
 time = Calcul_time(start, end)
 my_print(f"You finished the game in : {time} sec\n")
