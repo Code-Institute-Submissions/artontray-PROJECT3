@@ -16,24 +16,18 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('LeJustePrix')
-
 sales = SHEET.worksheet('Level_Low')
-
 data = sales.get_all_values()
 
-#print(data)
 
 def my_print(message):
     """
     Return an custom print message
     """
-   
-    SIZE = 22
-   
-    message_tab=wrap(message, SIZE)
+    # How much letters per line
+    SIZE = 28
+    message_tab = wrap(message, SIZE)
     i = 1
-    
-
     print("\n")
     print("˚" * 33)
     while i <= len(message_tab):
@@ -42,14 +36,9 @@ def my_print(message):
         i += 1
     print("˚˚˚˚˚O˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚˚")
     print("      o     ^__^")
-    print("        ˚   (oo)\_______")
-    print("            (__)\       )\/")
+    print("        ˚   (oo) _______")
+    print("            (__)         )--/ ")
     print("                ||----w||")
-
-
-
-
-
 
 
 def Calcul_time(time_start, time_end):
@@ -65,8 +54,7 @@ def choose_level(data_username):
     User can choose the level for the game
     can type 0, 1, 2 or 3
     """
-    
-    message = f"Welcome {data_username}, let's Play a Game!\n"
+    message = "Welcome {data_username}, let's Play a Game!\n"
     message += "First, Choose your level ?\n"
     message += "0 for Beginner, \n"
     message += "1 for Medium, \n"
@@ -76,35 +64,30 @@ def choose_level(data_username):
     while True:
         try:
             level_user = int(input("Enter your level : \n"))
-                
-
-            if level_user > 3: 
+            if level_user > 3:
                 raise ValueError(
-                    print(f"Type 0, 1, 2 or 3")
+                    print("Type 0, 1, 2 or 3")
                 )
-            else:  
-                break     
+            else:
+                break
         except Exception:
-            print("Error, Try Again!") 
+            print("Error, Try Again!")
         else:
-            choose_level(data_username)    
+            choose_level(data_username)
     return level_user
 
 
-            
 def get_username():
     """
     Get username to register into Excel file
     """
     while True:
-        my_print("Let\'s register your name, Max 12 caracters, cannot be empty!")
+        my_print("Let\'s register your name!")
         data_username = input("Enter your name here : \n")
         data_username = data_username.replace(" ", "")
         if validate_data(data_username):
             return data_username
-            break
 
-    return data_username
 
 def validate_data(values):
     """
@@ -115,17 +98,18 @@ def validate_data(values):
     try:
         if len(values) > 12:
             raise ValueError(
-                f"12 caracters max, you provided {len(values)}"
+                print("12 caracters as a maximum!")
             )
-        if len(values) == 0 :
+        if len(values) == 0:
             raise ValueError(
-                f"Empty name, provide a name please"
-            )            
+                print("Empty name, provide a name please")
+            )
     except ValueError as e:
         print(f"{e}, please try again.\n")
         return False
 
     return True
+
 
 start = time.time()
 # time.sleep(1)
