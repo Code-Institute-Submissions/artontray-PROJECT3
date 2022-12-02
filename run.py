@@ -17,16 +17,38 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('LeJustePrix')
+WORKSHEETS = [
+    'Level_Low',
+    'Level_Medium',
+    'Level_Hard',
+    'Level_Champion'
+]
 
-
-def register_score(name_user,time,worksheet):
+def register_score(username,time,worksheet):
     """
     Return an custom print message
     """
+    # Check if username already in data base 
+
+
+    
+    # result = update_database(name_user,worksheet,time)
     worksheet_to_edit = SHEET.worksheet(worksheet)
-    # data = worksheet_to_edit.get_all_values()
-    data = [name_user,time]
-    worksheet_to_edit.append_row(data)
+    cell = worksheet_to_edit.find(username)
+    if worksheet_to_edit.find(username):
+        # print(f"Cell: {cell.row}") # 6
+        # print(f"Col : {cell.col}") # 1
+        # We update the line with existing name only if Time score is better
+        if int(worksheet_to_edit.cell(cell.row, 2).value) > int(time):
+            worksheet_to_edit.update_cell(cell.row, 2, time)
+            return "NewRecord" 
+        else:
+            return "NoNewRecord"    
+    else:
+        data = [username,time]
+        worksheet_to_edit.append_row(data)
+        return "NewEntries"  
+            
 
 def my_print(message):
     """
@@ -93,8 +115,11 @@ def get_username():
         my_print("Let\'s register your name!")
         data_username = input("Enter your name here : \n")
         data_username = data_username.replace(" ", "")
+
         if validate_data(data_username):
             return data_username
+
+
 
 
 def validate_data(values):
@@ -104,6 +129,8 @@ def validate_data(values):
     or empty.
     """
     try:
+        
+        # data = worksheet_to_edit.get_all_values()
         if len(values) > 12:
             raise ValueError(
                 f"12 caracters as a maximum!"
@@ -240,9 +267,10 @@ def run_game(level):
     """
     nb_max = select_max_number(level)
     number_to_guess = random_number(nb_max)
+    print(number_to_guess)
     timeline = build_timeline(number_to_guess,nb_max)
     result = False
-    print(number_to_guess)
+    # print(number_to_guess)
     while not result == True:
         user_guess_number = check_input_user(nb_max)
         time_line_string = show_timeline(timeline,user_guess_number)
@@ -255,16 +283,25 @@ def which_worksheet(level):
     Return the worksheet appropriate according the chosen level
     """
     if level == 0:
-        worksheet = 'Level_Low'
+        worksheet = WORKSHEETS[level]
     elif level == 1:
-        worksheet = 'Level_Medium'
+        worksheet = WORKSHEETS[level]
     elif level == 2:
-        worksheet = 'Level_Hard'
+        worksheet = WORKSHEETS[level]
     elif level == 3:
-        worksheet = 'Level_Champion'        
+        worksheet = WORKSHEETS[level]       
     else:
-        worksheet = 'Level_Low'
+        worksheet = WORKSHEETS[0]
     return worksheet        
+
+
+
+
+
+
+
+
+
 
 
 start = get_time()
@@ -276,6 +313,13 @@ run_game(user_level)
 end = get_time()
 time_on_game = Calcul_time(start, end)
 worksheet = which_worksheet(user_level)
-register_score(user_name,time_on_game,worksheet)
-message = f"You Win ! You finished the game in : {time_on_game} sec"
+result = register_score(user_name,time_on_game,worksheet)
+message = f"Congrats! your time : {time_on_game} sec         "
+if result == "NewEntries":
+    message += "You are in score Tab"
+elif result == "NoNewRecord":
+    message += "No new record this Time!"
+elif result == "NewRecord":
+    message += "You made a New Record!"
+
 my_print(message)
