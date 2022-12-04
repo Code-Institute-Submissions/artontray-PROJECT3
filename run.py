@@ -26,51 +26,61 @@ WORKSHEETS = [
 
 def register_score(username,time,worksheet):
     """
-    Return an custom print message
+    Register / Update username and time into selected worksheet
+    - New line in the File if User is not registered already
+    - Update the File with new data if score is better
     """
     # Check if username already in data base 
-
-
-    
-    # result = update_database(name_user,worksheet,time)
     worksheet_to_edit = SHEET.worksheet(worksheet)
     cell = worksheet_to_edit.find(username)
-
-
-
     if worksheet_to_edit.find(username):
-        # print(f"Cell: {cell.row}") # 6
-        # print(f"Col : {cell.col}") # 1
-        # We update the line with existing name only if Time score is better
-        if int(worksheet_to_edit.cell(cell.row, 2).value) > int(time):
+        # Username already exist
+        if (int(time) < int(worksheet_to_edit.cell(cell.row, 2).value)):
+            # We update the Time on excel File only if Time score is smaller
             worksheet_to_edit.update_cell(cell.row, 2, int(time))
-            return "NewRecord" 
+            return "You made a New Record!\n" 
         else:
-            return "NoNewRecord"    
+            return "No new record this Time!\n"    
     else:
+        # First Time for this user, we register into Excel File
         data = [username,int(time)]
         worksheet_to_edit.append_row(data)
-        return "NewEntries"  
+        return "You are registered into score Tab\n"  
             
 
 def my_print(message):
     """
     Return an custom print message
     """
-    # How much letters per line
-    SIZE = 30
-    message_tab = wrap(message, SIZE)
-    i = 1
+    
+    message = message.splitlines() # Split the message detecting "\n" caracter
+    SIZE = 30 # max letters per line
     print("\n")
     print("." * 33)
-    while i <= len(message_tab):
-        str = message_tab[i-1]
-        print('|' + str.center(31, " ") + '|')
-        i += 1
+    for i in range(0, len(message)):
+        # For each line of message, we wrap into new tab if message is bigger than SIZE
+        message_tab = wrap(message[i], SIZE)
+        j = 1
+        while j <= len(message_tab):
+            # For each line of message_tab
+            str = message_tab[j-1]
+            j += 1
+            # We detect if existing ":" caracter
+            # If so We split the message in 2 to display it in a nice way
+            str_empty = " "
+            if str.count(":") == 1: 
+                str = str.split(":")
+                
+                a = SIZE - len(str[1]) - 6
+                print(f"| {str[0]:3} : {str[1]:3}{str_empty.center(a, ' ')} |")
+            else:
+                
+                # print(f"| {str:3}{str_empty.center(a, ' ')}|")
+                print(f"| {str.center(SIZE, ' ')} |")
     print(".....   .........................")
     print("      O     ^__^")
     print("        ˚   (oo) _______")
-    print("            (__)         )--/ ")
+    print("            (__)  Milka  )--/ ")
     print("                ||----w|| \n")
 
 
@@ -87,20 +97,20 @@ def choose_level(data_username):
     User can choose the level for the game
     can type 0, 1, 2 or 3
     """
-    message = f"Welcome {data_username}! "
-    message += "Choose your level ?"
-    message += "Type 0 for Beginner, "
-    message += "1 for Medium, "
-    message += "2 for Hard, "
-    message += "and 3 for Champion"
+    message = f"Welcome {data_username}!\n"
+    message += "Your level ?\n"
+    message += "0:Beginner\n"
+    message += "1:Medium\n"
+    message += "2:Hard\n"
+    message += "3:Champion\n"
     my_print(message)
     while True:
         try:
-            level_user = int(input("Enter your level : \n"))
+            level_user = int(input("Enter your level(Type 0, 1, 2 or 3) : \n"))
             
-            if level_user > 3:
+            if level_user > 3 or level_user < 0:
                 raise ValueError(
-                    f"Wrong number!"
+                    f"Wrong number!\n"
                 )
             else:
                 break    
@@ -117,7 +127,7 @@ def get_username():
     Get username to register into Excel file
     """
     while True:
-        my_print("Let\'s register your name!")
+        my_print("Let\'s register your name!\n")
         data_username = input("Enter your name here : \n")
         data_username = data_username.replace(" ", "")
 
@@ -159,7 +169,7 @@ def get_time():
 
 def select_max_number(level):
     """
-    According the level attribute it will return a number max for the range
+    Depending the value of "level", it will return a number max for the range
     """
     if level == 0:
         nb_max = 100
@@ -188,7 +198,7 @@ def check_input_user(nb_max):
     """
     while True:
         try:
-            user_input = int(input(f"Enter a guess number from 0 to {nb_max} : \n"))
+            user_input = int(input(f"Enter a number from 1 to {nb_max} : \n"))
             if user_input <= nb_max:
                 return user_input
         except ValueError:
@@ -214,25 +224,32 @@ def check_result(user_guess_number,number_to_guess):
 
 def build_timeline(number_to_guess,max_nb):
     """
-    Build up a timeline to show up the user where is
-    situated his current guess in comparation to the
-    number to guess
+    Build up a timeline :
+    Array of 11 numbers from 0 to max_nb with calculated gaps in between
+    example : [0, 31, 62, 93, 124, 155, 224, 293, 362, 431, 500]
+    the number to guess will be always in the middle : 155 in this example
     """
     gap_btw_left_side = int(number_to_guess / 5)
     gap_btw_right_side = int((max_nb-number_to_guess)/5)
+    if gap_btw_right_side == 0:
+        gap_btw_right_side += 1
+        
+
     timeline = []
     nb = 0
+    # We add the number 0 in first position of the array
     timeline.append(nb)
     for i in range(0, 4):
         nb += gap_btw_left_side
         timeline.append(nb)
-    nb =  number_to_guess   
-    timeline.append(nb)    
+    # We add the number to guess in the middle of the array    
+    timeline.append(number_to_guess)
+    nb = number_to_guess    
     for i in range(0, 4):
         nb += gap_btw_right_side
         timeline.append(nb)
+    # We add the number max_nb at the end of the array
     timeline.append(max_nb)  
-  
     return timeline 
 
 
@@ -245,23 +262,22 @@ def show_timeline(timeline,input_user):
     the guess in comparation to the number to guess
     """
     i = 0
-    timeline_string = f"You enter the Number : {input_user}                "
+    timeline_string = f"You enter the Number {input_user}\n"
     timeline_string += "|"
-    while i <= len(timeline):
-        if i == 5: 
-            timeline_string += "# "
-            if input_user > timeline[i] and input_user < timeline[i+1]:
-                timeline_string += "X " # input user is in between 2 values in the timeline
-        elif i == len(timeline):
-            timeline_string += "|" # we close the timeline
-            break;
-        elif input_user > timeline[i] and input_user < timeline[i+1]:
-            timeline_string += "X " # input user is in between 2 values in the timeline
-        elif input_user == timeline[i]:
-            timeline_string += "X " # input user is exactly one of the value in timeline
+    print(timeline)
+    while i < (len(timeline)-1):
+        if (input_user > timeline[i] and input_user <= timeline[i+1]):
+            timeline_string += "X "
         else:
-            timeline_string += "- " # nothing to show, we draw a line
+            if input_user == 0 and i == 0:
+                timeline_string += "X "
+            else:    
+                timeline_string += "- "
+        if i == 4:
+            timeline_string += "# "
+
         i += 1
+    timeline_string += "|\n"    
     return timeline_string
 
 def run_game(level):
@@ -281,7 +297,7 @@ def run_game(level):
         time_line_string = show_timeline(timeline,user_guess_number)
         result = check_result(user_guess_number,number_to_guess)
         if result != True:
-            my_print(f"{time_line_string}     It's {result}, try Again! ")
+            my_print(f"{time_line_string}\n It's {result}, try Again! ")
 
 def which_worksheet(level):
     """
@@ -300,78 +316,76 @@ def which_worksheet(level):
     return worksheet        
 
 
-#worksheet_to_edit = SHEET.worksheet('Level_Low')
+def sort_result(worksheet):
+    """
+    Return a sorted tab by "Time" from a selected worksheet
+    This tab will help to build up a scoring tab to show to user 
+    """
+    worksheet_to_edit = SHEET.worksheet(worksheet)
+    data = worksheet_to_edit.get_all_values()
+    number_lines = len(data)
+    tab = []
+    for i in range(1, number_lines):
+        time = f"B{i+1}"
+        name = f"A{i+1}"
+        time = str(worksheet_to_edit.get(time))
+        name = str(worksheet_to_edit.get(name))
+        time = time.replace("[['", "")
+        time = time.replace("']]", "")
+        name = name.replace("[['", "")
+        name = name.replace("']]", "")
+        tab.append((int(time),name))
 
-# take second element for sort
-#def takeSecond(elem):
-#    return elem[1]
+    tab.sort()
 
-# random list
-#data = worksheet_to_edit.get_all_values()
-# res = [eval(i) for i in data[i]]
-# test_list = [int(i) for i in data[][i]]
-# sort list with key
-#data[0][1] = int(data[0][1])
-#data.sort(key=takeSecond)
-#print(data)
+    return tab
 
+def show_scoring(score_tab,worksheet,user):
+    """
+    Return a string with the 5 first all-time record
+    if user is not in the list we add his position in the
+    scoring tab
+    """
+    message = ""
 
-#def myFunc(e):
-#  return e[1]
+    for i in range(0, len(score_tab)):
+        if i < 5:
+            if score_tab[i][1] == user:
+                message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
+            else:    
+                message += f"{i+1}:{score_tab[i][1]}\n"
 
+        else:
+            if score_tab[i][1] == user:  
+                message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
+        
 
-#data = worksheet_to_edit.get('B1')
-#data.sort()
-#print(data)
-#number_lines = len(data)
-#database = []
-#for i in range(1, number_lines):
-#    time = f"B{i+1}"
-#    name = f"A{i+1}"
-#    time = str(worksheet_to_edit.get(time))
-#    name = str(worksheet_to_edit.get(name))
-#    time = time.replace("[['", "")
-#    time = time.replace("']]", "")
-#    name = name.replace("[['", "")
-#    name = name.replace("']]", "")
-#    tab = []
-#    # database[i-1]['name'] = name
-#    # database[i-1]['time'] = time
-#    tab.append((int(time),name))
-#    # database.append(f'[{name},{time}]')
-#    # print(f" Time {time} , Name : {name}")
-#    database.append(tab)
+    return message       
 
-
-
-
-
-#database.sort()
-
-#print(database)
-
-
-
+            
+def main():
+    """
+    Main function of the Game
+    """               
+    start = get_time()
+    # time.sleep(1)
+    user_name = get_username()
+    user_level = choose_level(user_name)
+    # my_print("your level is : " + str(user_level))
+    run_game(user_level)
+    end = get_time()
+    time_on_game = Calcul_time(start, end)
+    worksheet = which_worksheet(user_level)
+    result = register_score(user_name,time_on_game,worksheet)
+    message = f"Congrats! your time is {time_on_game} sec         "
+    message += result
+    score_tab = sort_result(worksheet)
+    result = show_scoring(score_tab,worksheet,user_name)
+    message += result
+    my_print(message)
+   
 
 
+main()
 
 
-start = get_time()
-# time.sleep(1)
-user_name = get_username()
-user_level = choose_level(user_name)
-# my_print("your level is : " + str(user_level))
-run_game(user_level)
-end = get_time()
-time_on_game = Calcul_time(start, end)
-worksheet = which_worksheet(user_level)
-result = register_score(user_name,time_on_game,worksheet)
-message = f"Congrats! your time : {time_on_game} sec         "
-if result == "NewEntries":
-    message += "You are in score Tab"
-elif result == "NoNewRecord":
-    message += "No new record this Time!"
-elif result == "NewRecord":
-    message += "You made a New Record!"
-
-my_print(message)
