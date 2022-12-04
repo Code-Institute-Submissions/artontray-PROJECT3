@@ -35,17 +35,20 @@ def register_score(username,time,worksheet):
     # result = update_database(name_user,worksheet,time)
     worksheet_to_edit = SHEET.worksheet(worksheet)
     cell = worksheet_to_edit.find(username)
+
+
+
     if worksheet_to_edit.find(username):
         # print(f"Cell: {cell.row}") # 6
         # print(f"Col : {cell.col}") # 1
         # We update the line with existing name only if Time score is better
         if int(worksheet_to_edit.cell(cell.row, 2).value) > int(time):
-            worksheet_to_edit.update_cell(cell.row, 2, time)
+            worksheet_to_edit.update_cell(cell.row, 2, int(time))
             return "NewRecord" 
         else:
             return "NoNewRecord"    
     else:
-        data = [username,time]
+        data = [username,int(time)]
         worksheet_to_edit.append_row(data)
         return "NewEntries"  
             
@@ -84,27 +87,29 @@ def choose_level(data_username):
     User can choose the level for the game
     can type 0, 1, 2 or 3
     """
-    message = f"Welcome {data_username}, let's Play a Game!\n"
-    message += "First, Choose your level ?\n"
-    message += "0 for Beginner, \n"
-    message += "1 for Medium, \n"
-    message += "2 for Hard, \n"
-    message += "and 3 for Champion\n"
+    message = f"Welcome {data_username}! "
+    message += "Choose your level ?"
+    message += "Type 0 for Beginner, "
+    message += "1 for Medium, "
+    message += "2 for Hard, "
+    message += "and 3 for Champion"
     my_print(message)
     while True:
         try:
             level_user = int(input("Enter your level : \n"))
+            
             if level_user > 3:
                 raise ValueError(
-                    print("Wrong number!")
+                    f"Wrong number!"
                 )
             else:
-                break
-        except ValueError:
-            print("Only Number 0, 1, 2 or 3... Try Again!")
-        else:
-            choose_level(data_username)
-    return level_user
+                break    
+        except ValueError as e:
+            my_print(f"{e} - Only Number 0, 1, 2 or 3... Try Again!")
+    return level_user        
+
+
+
 
 
 def get_username():
@@ -295,8 +300,55 @@ def which_worksheet(level):
     return worksheet        
 
 
+#worksheet_to_edit = SHEET.worksheet('Level_Low')
+
+# take second element for sort
+#def takeSecond(elem):
+#    return elem[1]
+
+# random list
+#data = worksheet_to_edit.get_all_values()
+# res = [eval(i) for i in data[i]]
+# test_list = [int(i) for i in data[][i]]
+# sort list with key
+#data[0][1] = int(data[0][1])
+#data.sort(key=takeSecond)
+#print(data)
 
 
+#def myFunc(e):
+#  return e[1]
+
+
+#data = worksheet_to_edit.get('B1')
+#data.sort()
+#print(data)
+#number_lines = len(data)
+#database = []
+#for i in range(1, number_lines):
+#    time = f"B{i+1}"
+#    name = f"A{i+1}"
+#    time = str(worksheet_to_edit.get(time))
+#    name = str(worksheet_to_edit.get(name))
+#    time = time.replace("[['", "")
+#    time = time.replace("']]", "")
+#    name = name.replace("[['", "")
+#    name = name.replace("']]", "")
+#    tab = []
+#    # database[i-1]['name'] = name
+#    # database[i-1]['time'] = time
+#    tab.append((int(time),name))
+#    # database.append(f'[{name},{time}]')
+#    # print(f" Time {time} , Name : {name}")
+#    database.append(tab)
+
+
+
+
+
+#database.sort()
+
+#print(database)
 
 
 
