@@ -54,12 +54,15 @@ def register_score(username,time,worksheet):
 def my_print(message):
     """
     Return an custom print message
+    2 cases :
+    - Normal strings : will display in the center of the custom box message
+    - Strings with ":" which means its a score tab or listing tab (example -> Name : score)
     """
-    
     message = message.splitlines() # Split the message detecting "\n" caracter
     SIZE = 30 # max letters per line
     print("\n")
     print("." * 33)
+    str_empty = " "
     for i in range(0, len(message)):
         # For each line of message, we wrap into new tab if message is bigger than SIZE
         message_tab = wrap(message[i], SIZE)
@@ -70,15 +73,13 @@ def my_print(message):
             j += 1
             # We detect if existing ":" caracter
             # If so We split the message in 2 to display it in a nice way
-            str_empty = " "
             if str.count(":") == 1: 
                 str = str.split(":")
-                
                 a = SIZE - len(str[0]) - len(str[1]) - 3
+                # We place an empty string in the center after each line so "|" will end up always same place
                 print(f"| {str[0]} : {str[1]}{str_empty.center(a, ' ')} |")
             else:
-                
-                # print(f"| {str:3}{str_empty.center(a, ' ')}|")
+                # Normal string displayed middle of the box
                 print(f"| {str.center(SIZE, ' ')} |")
     print(".....   .........................")
     print("      O     ^__^")
@@ -131,9 +132,10 @@ def get_username():
     while True:
         my_print("Let\'s register your name!\n")
         data_username = input("Enter your name here : \n")
+        # Deleting all spaces into name
         data_username = data_username.replace(" ", "")
-
         if validate_data(data_username):
+            my_print(f"Welcome {data_username} !")
             return data_username
 
 
@@ -146,8 +148,6 @@ def validate_data(values):
     or empty.
     """
     try:
-        
-        # data = worksheet_to_edit.get_all_values()
         if len(values) > 12:
             raise ValueError(
                 f"12 caracters as a maximum!"
@@ -157,7 +157,7 @@ def validate_data(values):
                 f"Empty name, provide a name please"
             )
     except ValueError as e:
-        print(f"{e}, please try again.\n")
+        print(f"{e}, please try again.")
         return False
 
     return True
@@ -202,11 +202,16 @@ def check_input_user(nb_max):
     while True:
         try:
             user_input = int(input(f"Enter a number from 1 to {nb_max} : \n"))
-            if user_input <= nb_max:
+            if user_input <= nb_max and user_input >= 0:
                 return user_input
+            else:
+                raise ValueError(
+                print("Enter a number into the range!")
+                )
         except ValueError:
             print("Error, try again!")
     
+
 def check_result(user_guess_number,number_to_guess):
     """
     Return True if user guess correctly the number
@@ -236,7 +241,6 @@ def build_timeline(number_to_guess,max_nb):
     gap_btw_right_side = int((max_nb-number_to_guess)/5)
     if gap_btw_right_side == 0:
         gap_btw_right_side += 1
-
 
     timeline = []
     nb = 0
@@ -292,11 +296,8 @@ def run_game(level):
     """
     nb_max = select_max_number(level)
     number_to_guess = random_number(nb_max)
-
-
     timeline = build_timeline(number_to_guess,nb_max)
     result = False
-
     while not result == True:
         user_guess_number = check_input_user(nb_max)
         time_line_string = show_timeline(timeline,user_guess_number)
@@ -325,31 +326,39 @@ def sort_result(worksheet):
     """
     Return a sorted tab by "Time" from a selected worksheet
     This tab will help to build up a scoring tab to show to user 
+    example :
+    - from worksheet_to_sort.get() function we have a following result :
+    [['damien']] [['22']]
+    [['deuz']] [['12']]
+    [['trois']] [['7']]
+    [['quatre']] [['17']]
+    [['fred']] [['11']]
+    [['dsadsa']] [['6']]
+    - This function will return a sorted list as the following result
+    [(6, 'dsadsa'), (7, 'trois'), (11, 'fred'), (12, 'deuz'), (17, 'quatre'), (22, 'damien')]
     """
-    worksheet_to_edit = SHEET.worksheet(worksheet)
-    data = worksheet_to_edit.get_all_values()
+    worksheet_to_sort = SHEET.worksheet(worksheet)
+    data = worksheet_to_sort.get_all_values()
     number_lines = len(data)
     tab = []
     for i in range(1, number_lines):
         time = f"B{i+1}"
         name = f"A{i+1}"
-        time = str(worksheet_to_edit.get(time))
-        name = str(worksheet_to_edit.get(name))
+        time = str(worksheet_to_sort.get(time))
+        name = str(worksheet_to_sort.get(name))
         time = time.replace("[['", "")
         time = time.replace("']]", "")
         name = name.replace("[['", "")
         name = name.replace("']]", "")
         tab.append((int(time),name))
-
     tab.sort()
-
     return tab
 
 def show_scoring(score_tab,worksheet,user):
     """
     Return a string with the 5 first all-time record
     if user is not in the list we add his position in the
-    scoring tab
+    scoring tab with his position in the list
     """
     message = f"{worksheet}\n"
 
@@ -359,7 +368,6 @@ def show_scoring(score_tab,worksheet,user):
                 message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
             else:    
                 message += f"{i+1}:{score_tab[i][1]}\n"
-
         else:
             if score_tab[i][1] == user:  
                 message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
@@ -416,27 +424,33 @@ def instructions():
 def main(user_name):
     """
     Main function of the Game
+    1/Get instructions of the game : instructions()
+    2/choose the level of the game : choose_level()
+    3/Time is starting to get registered : start = get_time()
+    4/Run the Game : run_game(user_level)
+    5/user found the good number, we stop the Time : end = get_time()
+    6/Calculate the time on-game : Calcul_time(start, end)
+    7/According the selected level, we select a right worksheet : which_worksheet(user_level)
+    8/We register the data into excel file : register_score(user_name,time_on_game,worksheet)
+    9/We sort the files by Time value, smaller time is first : sort_result(worksheet)
+    10/We show the scoring tab : show_scoring(score_tab,worksheet,user_name)
     """
     playing_game = True
-
     while playing_game:
-        instructions()               
-        
-        
+        instructions()              
         user_level = choose_level()
-        start = get_time()
-        run_game(user_level)
-        end = get_time()
-        time_on_game = Calcul_time(start, end)
-        worksheet = which_worksheet(user_level)
-        result = register_score(user_name,time_on_game,worksheet)
-        message = result
-        score_tab = sort_result(worksheet)
+        start = get_time() 
+        run_game(user_level) 
+        end = get_time() 
+        time_on_game = Calcul_time(start, end) 
+        worksheet = which_worksheet(user_level) 
+        result = register_score(user_name,time_on_game,worksheet) 
+        message = result 
+        score_tab = sort_result(worksheet) 
         result = show_scoring(score_tab,worksheet,user_name)
         message += result
         my_print(message)
         instruction_command = input("Do you want to play again? y/n : ")
-        
         if instruction_command.lower() == "n":
             playing_game = False
             my_print("Thank you for playing! Bye")
