@@ -1,31 +1,118 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Purpose of this project
 
-Welcome Damien,
+This project was developed in order to demonstrate 
+some ability to code in Python.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+# Le Juste Prix
 
-## Reminders
+This game was very famous in 90' in France. I got inspired by doing a game as the original version of
+"Le Juste Prix"
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+If you are interested just check this link [Just check this link!](https://www.youtube.com/watch?v=km34cI20HHw)
 
-## Creating the Heroku app
+# Contents
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+* [**User Experience UX**](<#user-experience-ux>)
+    * [Wireframes](<#wireframes>)
+    * [Structure of the game](<#structure-of-the-game>)
+    * [Programming Structure](<#programming-structure>)
+    * [Design Choices](<#design-choices>)
+    *   [Typography](<#typography>)
+    *   [Color Scheme](<#colour-scheme>)
+    *   [User stories](<#user-stories>)
+* [**Features**](<#features>)
+    * [**Header**](<#header>)
+    * [**Body**](<#body>)
+    * [**Footer**](<#footer>)
+    * [**Displaying Cards**](<#displaying-cards>)
+    * [**Loading a New Game**](<#loading-a-new-game>)
+    * [**When is the Game finished**](<#when-is-the-game-finished>)
+    * [**Error 404**](<#error-404>)
+    * [**Future Features**](<#future-features>)
+* [**Technologies Used**](<#technologies-used>)
+* [**Testing**](<#testing>)
+     * Am i responsive?
+     * HTML / CSS Validator
+     * Browser Compatibility
+     * Lighthouse
+     * Bugs
+* [**Deployment**](<#deployment>)
+* [**Credits**](<#credits>)
+    * [**Content**](<#content>)
+    * [**Media**](<#media>)
+    * [**Best part of this project**](<#best-part-of-this-project>)
+*  [**Acknowledgements**](<#acknowledgements>)
 
-1. `heroku/python`
-2. `heroku/nodejs`
+# User Experience (UX)
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Wireframes
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+The wireframes for this website were inspired by  [CowSay](https://en.wikipedia.org/wiki/Cowsay).
+From beginning, i wanted to make the game interactive with a custom print function:
 
-Connect your GitHub repository and deploy as normal.
+![Main page with Cowsay](assets/images/readme-images/cowsay.png)
 
-## Constraints
+This is the final interaction layout of the Game:
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+![Main page with Cowsay](assets/images/readme-images/cowsaymain.png)
 
------
-Happy coding!
+[Back to top](<#contents>)
+
+## Structure of the game
+
+Le juste prix game has ONE main page run.py . The [Game](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up asking for a name.
+
+![Your name](assets/images/readme-images/yourname.png)
+
+This name will be registered to Excel file database for scoring tab display.
+
+
+
+An other Box is displayed to allows the user to get to know about the objectives and rules of the Game :
+
+![Instructions](assets/images/readme-images/instructions.png)
+
+Press any key to run the instructions....
+
+![Instructions](assets/images/readme-images/instructions1.png)
+
+![Instructions](assets/images/readme-images/instructions2.png)
+
+![Instructions](assets/images/readme-images/instructions3.png)
+
+After finishing to read the instructions, the user can start playing!
+
+ The Game display is easy, 4 differents level of difficulty:
+* Beginner : User will have to guess a number from 1 to 100
+* Medium : User will have to guess a number from 1 to 500
+* hard : User will have to guess a number from 1 to 1000
+* Champion : User will have to guess a number from 1 to 10000
+
+![Instructions](assets/images/readme-images/instructions4.png)
+
+[Back to top](<#contents>)
+
+## Programming Structure
+
+Before starting to code, I wanted to have a big picture of the programming structure :
+
+ ** Beginning of the Game ** :
+   - 1/Get instructions of the game 
+   - 2/choose the level of the game 
+   - 3/Time is starting to get registered 
+   - 4/Run the Game 
+   - 5/user found the good number, we stop the Time 
+   - 6/Calculate the time on-game 
+   - 7/According the selected level, we select a right worksheet 
+   - 8/We register the data into excel file 
+   - 9/We sort the files by Time value, smaller time is first 
+   - 10/We show the scoring tab 
+
+[Back to top](<#contents>)
+
+
+
+
+
+
+
