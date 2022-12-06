@@ -62,7 +62,7 @@ def my_print(message):
     """
     message = message.splitlines()  # Split the message detecting "\n" caracter
     SIZE = 30  # max letters per line
-    print("\n")
+    print("\n\n\n")
     print("." * 33)
     str_empty = " "
     for i in range(0, len(message)):
@@ -89,7 +89,9 @@ def my_print(message):
     print("      O     ^__^")
     print("        ˚   (oo) _______")
     print("            (__)  Milka  )--/ ")
-    print("                ||----w|| \n")
+    print("                ||----w|| ")
+    print("                ||     || \n")
+    print("\n")
 
 
 def Calcul_time(time_start, time_end):
@@ -131,7 +133,7 @@ def get_username():
     """
     while True:
         my_print("Let\'s register your name!\n")
-        data_username = input("Enter your name here : \n")
+        data_username = input("Enter your name here (7 caracters max): \n")
         # Deleting all spaces into name
         data_username = data_username.replace(" ", "")
         if validate_data(data_username):
@@ -142,13 +144,13 @@ def get_username():
 def validate_data(values):
     """
     Check the username input :
-    Raises ValueError if strings more than 12 Caracters,
+    Raises ValueError if strings more than 7 Caracters,
     or empty.
     """
     try:
-        if len(values) > 12:
+        if len(values) > 7:
             raise ValueError(
-                f"12 caracters as a maximum!"
+                f"7 caracters as a maximum!"
             )
         if len(values) == 0:
             raise ValueError(
@@ -189,7 +191,7 @@ def random_number(nb_max):
     """
     Return a number between 1 and nb_max
     """
-    my_print(f"I have chosen anumber between 1 and {nb_max}!\nGOOD LUCK!")
+    my_print(f"I have chosen a number between 1 and {nb_max}!\nGOOD LUCK!")
     return randint(1, nb_max)
 
 
@@ -357,20 +359,22 @@ def sort_result(worksheet):
 def show_scoring(score_tab, worksheet, user):
     """
     Return a string with the 5 first all-time record
-    if user is not in the list we add his position in the
-    scoring tab with his position in the list
+    if user is not in the list (5 first best players) we 
+    add his position in the scoring tab with 
+    his position in the list.
     """
-    message = f"{worksheet}\n"
+    
+    message = f"Level : {worksheet.upper()}\n"
 
     for i in range(0, len(score_tab)):
         if i < 5:
             if score_tab[i][1] == user:
-                message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
+                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec <-You\n"
             else:
-                message += f"{i+1}:{score_tab[i][1]}\n"
+                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec\n"
         else:
             if score_tab[i][1] == user:
-                message += f"{i+1}:{score_tab[i][1]}(<- You)\n"
+                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec <-You\n"
     return message
 
 

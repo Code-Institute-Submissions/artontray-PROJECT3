@@ -33,7 +33,6 @@ Sometimes is better a good picture than a big text to explain something :
      * [**Am i responsive?**](<#am-i-responsive>)
      * [**Python Validator**](<#python>)
      * [**Browser Compatibility**](<#browser-compatibility>)
-     * [**Lighthouse**](<#lighthouse>)
      * [**Bugs**](<bugs>)
 * [**Deployment**](<#deployment>)
 * [**Credits**](<#credits>)
@@ -46,7 +45,7 @@ Sometimes is better a good picture than a big text to explain something :
 
 ## Wireframes
 
-The wireframes for this website were inspired by  [CowSay](https://en.wikipedia.org/wiki/Cowsay).
+The wireframes for this game were inspired by  [CowSay](https://en.wikipedia.org/wiki/Cowsay).
 From beginning, i wanted to make the game interactive with a custom print function:
 
 ![Main page with Cowsay](assets/images/readme-images/cowsay.png)
@@ -127,11 +126,13 @@ First Time Visitor Goals
 - As a First Time Visitor, I want immediately to understand the main purpose of the game.
 - I want to be able to quickly understand the game controls and mechanics in order to enjoy playing the game
 - I want to be able to consult the game instructions as many time I want.
-- I want to be able to see my score as I play the game.
+- I want to be able to see my score after each game.
 - I would like to play a simple game, with a fairly short play time.
 
-Considering that there is no possibility to login for the user, all users are considered as "first time visitor".
-But the Game is built in the way that if you use the same username, you can try to challenge yourself
+Considering that there is no possibility to login for the user, the Game is built in the way that :
+  - As long as you perform at least one game, your name and scoring is registered into database
+  - if your name is already on the database, your score for each game will be updated only if scoring is better
+  - 
 getting a better scoring on each game.
 
 ![scoring](assets/images/readme-images/scoring.png)
@@ -193,21 +194,15 @@ Each time you type an wrong answer, we will guide you to get back to reality :
 [Back to top](<#contents>)
 
   ### Future Features
-As a Future Features, I would like to developp a robot to be able to challenge real challengers.
-Having the check_result function returning True, More or Less, it can be easy to build a robot
-trying the right number until the answer returns True.
 
-![Robot](assets/images/readme-images/robot.png)
-
-Also, it could be interesting for the user to choose himself the range of number to guess...
-
+As a Future Features, it could be interesting for the user to choose himself the range of number to guess...
 
 [Back to top](<#contents>)
 
 # Technologies Used
 
 * [Python](https://www.python.org/) - provides game's functions and rules.
-* [Heroku](https://www.heroku.com/) - used to deploy the Game.
+* [Heroku](https://www.heroku.com/) - used to deploy the Game online.
 * [Gitpod](https://www.gitpod.io/#get-started) - used to get a workspace to use for coding.
 * [Github](https://github.com/) - used to edit the website.
 
@@ -215,9 +210,7 @@ Also, it could be interesting for the user to choose himself the range of number
 
 # Testing
 
-## Am I responsive Website?
-Yes, I am!
-- The responsive design tests were carried out on Iphones, Samsung Galaxy S8+, Ipad Air,Surface Pro 7 and even Nest Hub Max. The final design is much better on normal screen as home display.
+## Am I responsive App?
 
 - Responsive test from https://ui.dev/amiresponsive :
 
@@ -244,6 +237,29 @@ No errors detected.
 ## Browser Compatibility
 
 The website was tested on the following browsers with no visible issues for the user :
-- Google Chrome
+- Brave
 - Mozilla Firefox
 - Safari
+
+Appearance, functionality and responsiveness were consistent throughout for a range of device sizes and browsers.
+
+[Back to top](<#contents>)
+
+### To sum up
+To sum up :
+
+
+- I confirm that the main content of the game is readable and easy to understand.
+- I confirm that the interaction with the user is smooth and efficient with errors management functions.
+
+[Back to top](<#contents>) 
+
+### Bugs
+
+## Fixed Bug
+
+As i said, I wanted to create an custom print function for this game. It tooks me sometimes 
+to code it proprely because each message you want to display is different to an other.
+Dealing with different cases of messages created some problem of the display :
+
+![Error Layout](assets/images/readme-images/errorlayout.png)
