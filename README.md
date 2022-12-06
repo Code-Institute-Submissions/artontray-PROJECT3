@@ -30,11 +30,11 @@ Sometimes is better a good picture than a big text to explain something :
     * [**Future Features**](<#future-features>)
 * [**Technologies Used**](<#technologies-used>)
 * [**Testing**](<#testing>)
-     * Am i responsive?
-     * Python Validator
-     * Browser Compatibility
-     * Lighthouse
-     * Bugs
+     * [**Am i responsive?**](<#am-i-responsive>)
+     * [**Python Validator**](<#python>)
+     * [**Browser Compatibility**](<#browser-compatibility>)
+     * [**Lighthouse**](<#lighthouse>)
+     * [**Bugs**](<bugs>)
 * [**Deployment**](<#deployment>)
 * [**Credits**](<#credits>)
     * [**Content**](<#content>)
@@ -207,8 +207,9 @@ Also, it could be interesting for the user to choose himself the range of number
 # Technologies Used
 
 * [Python](https://www.python.org/) - provides game's functions and rules.
-* [Gitpod](https://www.gitpod.io/#get-started) - used to deploy the website.
-* [Github](https://github.com/) - used to host and edit the website.
+* [Heroku](https://www.heroku.com/) - used to deploy the Game.
+* [Gitpod](https://www.gitpod.io/#get-started) - used to get a workspace to use for coding.
+* [Github](https://github.com/) - used to edit the website.
 
 [Back to top](<#contents>)
 
@@ -231,7 +232,18 @@ Yes, I am!
 
 The Python validator results is below:
 - run.py : for testing I used the following tools [here](https://pep8ci.herokuapp.com/) 
-![run.py](assets/images/readme-images/html-checker-index.png)
+
+No errors detected.
+
+![Pep8](assets/images/readme-images/pythonchecker.png)
+
 
 
 [Back to top](<#contents>)
+
+## Browser Compatibility
+
+The website was tested on the following browsers with no visible issues for the user :
+- Google Chrome
+- Mozilla Firefox
+- Safari

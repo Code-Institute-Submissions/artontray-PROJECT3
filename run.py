@@ -293,12 +293,14 @@ def run_game(level):
     number_to_guess = random_number(nb_max)
     timeline = build_timeline(number_to_guess, nb_max)
     result = False
-    while not result == True:
+    while True:
         user_guess_number = check_input_user(nb_max)
-        time_line_string = show_timeline(timeline,user_guess_number)
-        result = check_result(user_guess_number,number_to_guess)
-        if result != True:
+        time_line_string = show_timeline(timeline, user_guess_number)
+        result = check_result(user_guess_number, number_to_guess)
+        if result is not True:
             my_print(f"{time_line_string}\n It's {result}, try Again! ")
+        else:
+            break
 
 
 def which_worksheet(level):
@@ -393,12 +395,9 @@ def instructions():
             my_print(message)
             instruction_command = input("Press Enter to continue.... ")
             message = "When you have selected your level of difficulty,"
-            
             message += "I will choose a number\n"
-            
             message += "You can try to guess my number as many time"
             message += "as you want, but time is running!!\n"
-            
             message += "Try to be fast to get good scoring!\n"
             my_print(message)
             instruction_command = input("Press Enter to continue.... ")
