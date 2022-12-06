@@ -135,7 +135,15 @@ def get_username():
         my_print("Let\'s register your name!\n")
         data_username = input("Enter your name here (7 caracters max): \n")
         # Deleting all spaces into name
-        data_username = data_username.replace(" ", "")
+        char_to_remov = [":", "\n", "\"", "\t", "\b", "\a", "\\", " "]
+
+
+        
+
+        for char in char_to_remov:
+            # replace() "returns" an altered string
+            data_username = data_username.replace(char, "")
+
         if validate_data(data_username):
             my_print(f"Welcome {data_username} !")
             return data_username
@@ -364,7 +372,7 @@ def show_scoring(score_tab, worksheet, user):
     his position in the list.
     """
     
-    message = f"Level : {worksheet.upper()}\n"
+    message = f"Level {worksheet.upper()}\n"
 
     for i in range(0, len(score_tab)):
         if i < 5:
