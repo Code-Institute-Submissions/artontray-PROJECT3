@@ -24,6 +24,21 @@ WORKSHEETS = [
     'Champion'
 ]
 
+def check_database(worksheet):
+    """
+    Check database
+    """
+    try:
+        worksheet_to_edit = SHEET.worksheet(worksheet)
+    except gspread.exceptions.WorksheetNotFound as e:
+        message = f"Worksheet '{e}' could not open to register your score...\n"
+        message += f"Creating worksheet {e}..."
+        my_print(message)
+        input("Press Enter to continue...")
+        worksheet = SHEET.add_worksheet(title=worksheet, rows="500", cols="2")
+        data = ['name', 'time']
+        worksheet.append_row(data)
+        
 
 def register_score(username, time, worksheet):
     """
@@ -35,8 +50,15 @@ def register_score(username, time, worksheet):
     message += "I register your score in the Database, please wait......\n"
     my_print(message)
     # Check if username already in data base
-    worksheet_to_edit = SHEET.worksheet(worksheet)
-    cell = worksheet_to_edit.find(username)
+    try:
+        worksheet_to_edit = SHEET.worksheet(worksheet)
+        cell = worksheet_to_edit.find(username)
+    except gspread.exceptions.WorksheetNotFound as e:
+        my_print(f"{e} Could not open the worksheet to register your score...")
+        
+        
+
+    
     if worksheet_to_edit.find(username):
         # Username already exist
         if (int(time) < int(worksheet_to_edit.cell(cell.row, 2).value)):
@@ -112,18 +134,18 @@ def choose_level():
     message += "1:Medium\n"
     message += "2:Hard\n"
     message += "3:Champion\n"
-    my_print(message)
+    message_original = message
     while True:
+        my_print(message)
+        message = message_original
         try:
             level_user = int(input("Enter your level(Type 0, 1, 2 or 3) : \n"))
-            if level_user > 3 or level_user < 0:
-                raise ValueError(
-                    f"Wrong number!\n"
-                )
+            if (level_user > 3) or (level_user < 0):
+                message += "Wrong number! \n"
             else:
                 break
-        except ValueError as e:
-            my_print(f"{e} - Only Number 0, 1, 2 or 3... Try Again!")
+        except ValueError:
+            message += "Only Number 0, 1, 2 or 3... Try Again!\n"
     return level_user
 
 def clean_username(username):
@@ -141,8 +163,8 @@ def get_username():
     """
     Get username to register into Excel file
     """
+    my_print("Let\'s register your name!\n")
     while True:
-        my_print("Let\'s register your name!\n")
         data_username = input("Enter your name here (7 caracters max): \n")
         data_username = clean_username(data_username)
         if validate_data(data_username):
@@ -166,10 +188,10 @@ def validate_data(values):
             )
         if len(values) == 0:
             raise ValueError(
-                f"Empty name, provide a name please"
+                f"Empty name, provide a name "
             )
     except ValueError as e:
-        print(f"{e}, please try again.")
+        my_print(f"{e}, please try again.")
         return False
 
     return True
@@ -305,6 +327,7 @@ def run_game(level):
     """
     nb_max = select_max_number(level)
     number_to_guess = random_number(nb_max)
+    print(number_to_guess)
     timeline = build_timeline(number_to_guess, nb_max)
     result = False
     while True:
@@ -401,36 +424,36 @@ def instructions():
             "Do you want to see instruction(s) for this game? y/n : "
             )
         if instruction_command.lower() == "y":
-            message = "The aim of this game is to guess"
-            message += "a number between a selected range\n"
-            message += "There is 4 differents levels of difficulty\n"
+            message = "The aim of this game is to guess "
+            message += "a number between a selected range.\n"
+            message += "4 differents levels of difficulty \n"
             message += "Beginner:1-100\n"
             message += "Medium:1-500\n"
             message += "Hard:1-1000\n"
             message += "Champion:1-10000\n"
             my_print(message)
-            instruction_command = input("Press Enter to continue.... ")
+            input("Press Enter to continue.... ")
             message = "When you have selected your level of difficulty,"
-            message += "I will choose a number\n"
-            message += "You can try to guess my number as many time"
+            message += "I will choose a number.\n"
+            message += "You can try to guess my number as many time "
             message += "as you want, but time is running!!\n"
             message += "Try to be fast to get good scoring!\n"
             my_print(message)
-            instruction_command = input("Press Enter to continue.... ")
-            message = "Enter a number, I will tell you if it\'s More or Less\n"
+            input("Press Enter to continue.... ")
+            message = "Enter a number, I will tell you if it\'s More or Less.\n"
             timeline = build_timeline(153, 1000)
             message += show_timeline(timeline, 40)
-            message += "My number is 153 and you typed 40\n"
+            message += "My number to guess is 153 and you typed 40.\n"
             message += "The X is showing how far you are from my number #\n"
             my_print(message)
-            instruction_command = input("Press Enter to continue.... ")
+            input("Press Enter to continue.... ")
             message = "Let\'s try again!\n"
             timeline = build_timeline(153, 1000)
             message += show_timeline(timeline, 160)
             message += "You are very close to my number '#', try again"
             message += "... and so on...\n"
             my_print(message)
-            instruction_command = input("Press Enter to continue.... ")
+            input("Press Enter to continue.... ")
             message = "When you discovered my number, I will register "
             message += "your score by calculating your time! \n"
             message += "Challenge yourself and be the faster Player on "
@@ -468,16 +491,19 @@ def main(user_name):
         end = get_time()
         time_on_game = Calcul_time(start, end)
         worksheet = which_worksheet(user_level)
+        check_database(worksheet)
         result = register_score(user_name, time_on_game, worksheet)
         message = result
         score_tab = sort_result(worksheet)
         result = show_scoring(score_tab, worksheet, user_name)
         message += result
         my_print(message)
-        instruction_command = input("Do you want to play again? y/n : \n")
-        if instruction_command.lower() == "n":
+        instruction_command = input("Enter any key to play again or 'q' to quit : \n")
+        if instruction_command.lower() == "q":
             playing_game = False
             my_print("Thank you for playing! Bye")
+
+
 
 
 user_name = get_username()
