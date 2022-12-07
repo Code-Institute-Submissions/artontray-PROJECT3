@@ -28,7 +28,7 @@ WORKSHEETS = [
 def register_score(username, time, worksheet):
     """
     Register / Update username and time into selected worksheet
-    - New line in the File if User is not registered already
+    - New line in the File if User is not already in the file
     - Update the File with new data if score is better
     """
     message = f"Congrats! your time is {time} sec\n"
@@ -126,6 +126,16 @@ def choose_level():
             my_print(f"{e} - Only Number 0, 1, 2 or 3... Try Again!")
     return level_user
 
+def clean_username(username):
+    """
+    Return a clean username without specific caracters
+    """    
+    # Deleting some specific caracter
+    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " "]
+    for char in char_to_remov:
+        username = username.replace(char, "")
+    return username
+
 
 def get_username():
     """
@@ -134,19 +144,12 @@ def get_username():
     while True:
         my_print("Let\'s register your name!\n")
         data_username = input("Enter your name here (7 caracters max): \n")
-        # Deleting all spaces into name
-        char_to_remov = [":", "\n", "\"", "\t", "\b", "\a", "\\", " "]
-
-
-        
-
-        for char in char_to_remov:
-            # replace() "returns" an altered string
-            data_username = data_username.replace(char, "")
-
+        data_username = clean_username(data_username)
         if validate_data(data_username):
             my_print(f"Welcome {data_username} !")
-            return data_username
+            break
+    return data_username
+
 
 
 def validate_data(values):
@@ -155,6 +158,7 @@ def validate_data(values):
     Raises ValueError if strings more than 7 Caracters,
     or empty.
     """
+   
     try:
         if len(values) > 7:
             raise ValueError(
@@ -427,9 +431,9 @@ def instructions():
             message += "... and so on...\n"
             my_print(message)
             instruction_command = input("Press Enter to continue.... ")
-            message = "When you discovered my number, I will register"
-            message += "your score by calculating your time\n"
-            message += "Challenge yourself and be the fastest on"
+            message = "When you discovered my number, I will register "
+            message += "your score by calculating your time! \n"
+            message += "Challenge yourself and be the faster Player on "
             message += "the score tab!\n"
             my_print(message)
         elif instruction_command.lower() == "n":
