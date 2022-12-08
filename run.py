@@ -23,13 +23,21 @@ WORKSHEETS = [
     'Hard',
     'Champion'
 ]
+MAX_NB_LEVEL0 = 100
+MAX_NB_LEVEL1 = 500
+MAX_NB_LEVEL2 = 1000
+MAX_NB_LEVEL3 = 10000
+
+
 
 def check_database(worksheet):
     """
-    Check database
+    Check database, if does not exist we create it
+    return True if worksheet exist or created successfully
     """
     try:
         worksheet_to_edit = SHEET.worksheet(worksheet)
+        
     except gspread.exceptions.WorksheetNotFound as e:
         message = f"Worksheet '{e}' could not open to register your score...\n"
         message += f"Creating worksheet {e}..."
@@ -38,6 +46,7 @@ def check_database(worksheet):
         worksheet = SHEET.add_worksheet(title=worksheet, rows="500", cols="2")
         data = ['name', 'time']
         worksheet.append_row(data)
+    return True
         
 
 def register_score(username, time, worksheet):
@@ -50,15 +59,8 @@ def register_score(username, time, worksheet):
     message += "I register your score in the Database, please wait......\n"
     my_print(message)
     # Check if username already in data base
-    try:
-        worksheet_to_edit = SHEET.worksheet(worksheet)
-        cell = worksheet_to_edit.find(username)
-    except gspread.exceptions.WorksheetNotFound as e:
-        my_print(f"{e} Could not open the worksheet to register your score...")
-        
-        
-
-    
+    worksheet_to_edit = SHEET.worksheet(worksheet)
+    cell = worksheet_to_edit.find(username)
     if worksheet_to_edit.find(username):
         # Username already exist
         if (int(time) < int(worksheet_to_edit.cell(cell.row, 2).value)):
@@ -66,7 +68,7 @@ def register_score(username, time, worksheet):
             worksheet_to_edit.update_cell(cell.row, 2, int(time))
             return "New Personal Record!\n"
         else:
-            return "No new record this Time!\n"
+            return "No new Personal record this Time!\n"
     else:
         # First Time for this user, we register into Excel File
         data = [username, int(time)]
@@ -152,9 +154,10 @@ def clean_username(username):
     """
     Return a clean username without specific caracters
     """    
-    # Deleting some specific caracter
+    
     char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " "]
     for char in char_to_remov:
+        # Deleting some specific caracter
         username = username.replace(char, "")
     return username
 
@@ -209,15 +212,15 @@ def select_max_number(level):
     Depending the value of "level", it will return a number max for the range
     """
     if level == 0:
-        nb_max = 100
+        nb_max = MAX_NB_LEVEL0
     elif level == 1:
-        nb_max = 500
+        nb_max = MAX_NB_LEVEL1
     elif level == 2:
-        nb_max = 1000
+        nb_max = MAX_NB_LEVEL2
     elif level == 3:
-        nb_max = 10000
+        nb_max = MAX_NB_LEVEL3
     else:
-        nb_max = 100
+        nb_max = MAX_NB_LEVEL0
     return nb_max
 
 
@@ -327,7 +330,6 @@ def run_game(level):
     """
     nb_max = select_max_number(level)
     number_to_guess = random_number(nb_max)
-    print(number_to_guess)
     timeline = build_timeline(number_to_guess, nb_max)
     result = False
     while True:
