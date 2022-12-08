@@ -33,14 +33,15 @@ MAX_NB_LEVEL3 = 10000
 
 def check_database(worksheet):
     """
-    Check database, if worksheet does not exist we create it
+    Method to check Database :
+    If worksheet does not exist we create it
     return True if worksheet exist or created successfully
     """
     try:
         worksheet_to_edit = SHEET.worksheet(worksheet)
-        
     except gspread.exceptions.WorksheetNotFound:
-        message = f"red:Error: Worksheet could not open.\n"
+        # Worksheet could not open, we create it
+        message = f"red:Error, Worksheet could not open.\n"
         message += f"blue:Creating worksheet..."
         my_print(message)
         input("Press Enter to continue...")
@@ -427,7 +428,10 @@ def show_scoring(score_tab, worksheet, user):
     """
     
     message = f"Level {worksheet.upper()}\n"
-
+    if len(score_tab) == 0:
+        # Worksheet empty, nothing to show
+        message += "Nothing to show, score tab is empty..."
+        return message
     for i in range(0, len(score_tab)):
         if i < 5:
             if score_tab[i][1] == user:
@@ -452,7 +456,9 @@ def show_score_tab(user_name):
             "Do you want to see the top Players? y/n : "
             )
         if instruction_command.lower() == "y":
+            
             for i in range(0, 4):
+                check_database(WORKSHEETS[i]) # Checking if worksheet exists
                 score_tab = sort_result(WORKSHEETS[i])
                 result = show_scoring(score_tab, WORKSHEETS[i], user_name)
                 my_print(result)
