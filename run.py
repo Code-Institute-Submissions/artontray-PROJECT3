@@ -31,7 +31,6 @@ MAX_NB_LEVEL2 = 1000
 MAX_NB_LEVEL3 = 10000
 
 
-
 def check_database(worksheet):
     """
     Check database, if worksheet does not exist we create it
@@ -75,7 +74,7 @@ def register_score(username, time, worksheet):
         # First Time for this user, we register into Excel File
         data = [username, int(time)]
         worksheet_to_edit.append_row(data)
-        return "blue:Your Score is registered!\n"
+        return "green:Your Score is registered!\n"
 
 
 
@@ -137,7 +136,8 @@ def my_print(message):
     print("        ˚   (oo) _______")
     print("            (__)  Milka  )--/ ")
     print("                ||----w|| ")
-    print("                ||     || \n")
+    print("                ||     || ")
+    print(green_string("/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ \n"))
     print("\n")
 
 
@@ -148,7 +148,7 @@ def choose_level():
     User can choose the level for the game
     can type 0, 1, 2 or 3
     """
-    message = "green:Choose your level ?\n"
+    message = "blue:Choose your level ?\n"
     message += "0:Beginner\n"
     message += "1:Medium\n"
     message += "2:Hard\n"
@@ -172,7 +172,7 @@ def clean_username(username):
     Return a clean username without specific caracters
     """    
     
-    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " "]
+    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " ", "'"]
     for char in char_to_remov:
         # Deleting some specific caracter
         username = username.replace(char, "")
@@ -360,7 +360,11 @@ def run_game(level):
             message += f"blue:It's {result}, try Again!"
             my_print(message)
         else:
-            break
+            message = f"green:YOU WIN, the number was {number_to_guess}\n"
+            message += "blue:Calculating your time...\n"
+            my_print(message)
+            
+            return time.sleep(4)
 
 
 def which_worksheet(level):
@@ -427,18 +431,43 @@ def show_scoring(score_tab, worksheet, user):
     for i in range(0, len(score_tab)):
         if i < 5:
             if score_tab[i][1] == user:
-                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec          <-You\n"
+                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
             else:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec\n"
         else:
             if score_tab[i][1] == user:
-                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec          <-You\n"
+                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
     return message
+
+
+
+def show_score_tab(user_name):
+    """
+    Function that display the score tab for each Level
+    """
+    get_instruction = True
+
+    while get_instruction:
+        instruction_command = input(
+            "Do you want to see the top Players? y/n : "
+            )
+        if instruction_command.lower() == "y":
+            for i in range(0, 4):
+                score_tab = sort_result(WORKSHEETS[i])
+                result = show_scoring(score_tab, WORKSHEETS[i], user_name)
+                my_print(result)
+                instruction_command = input(
+                    "Press Enter to continue..."
+                    )
+        elif instruction_command.lower() == "n":
+            get_instruction = False
+        else:
+            my_print("red:That is not a valid option. Please try again!")
 
 
 def instructions():
     """
-    Return a instruction message to explain the rules of this game
+    Give instructions about the rules of this game
     """
     get_instruction = True
 
@@ -473,7 +502,7 @@ def instructions():
             message += "The X is showing how far you are from it !\n"
             my_print(message)
             input("Press Enter to continue.... ")
-            message = "Let\'s try again!\n"
+            message = "Let\'s try again! Remember, the number to guess is 153 here!\n"
             timeline = build_timeline(153, 1000)
             message += show_timeline(timeline, 160)
             message += "red:It\'s Less\n"
@@ -483,7 +512,7 @@ def instructions():
             input("Press Enter to continue.... ")
             message = "When you discovered my number, I will register "
             message += "your score by calculating your time! \n"
-            message += "Challenge yourself and be the faster Player on "
+            message += "Challenge yourself and be the fastest Player on "
             message += "the score tab!\n"
             my_print(message)
         elif instruction_command.lower() == "n":
@@ -512,6 +541,7 @@ def main(user_name):
     playing_game = True
     while playing_game:
         instructions()
+        show_score_tab(user_name)
         user_level = choose_level()
         start = get_time()
         run_game(user_level)
@@ -528,7 +558,7 @@ def main(user_name):
         instruction_command = input("Enter any key to play again or 'q' to quit : \n")
         if instruction_command.lower() == "q":
             playing_game = False
-            my_print("Thank you for playing! Bye")
+            my_print("blue:Thank you for playing! Bye")
 
 def blue_string(text):
     """ Print a string in the colour blue """
@@ -549,5 +579,6 @@ def red_string(text):
     return string
 
 # my_print('green:Please enter your name please !\n')
+
 user_name = get_username()
 main(user_name)
