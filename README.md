@@ -88,7 +88,7 @@ Press any key to run the instructions....
 
 After finishing to read the instructions, the user can start playing!
 
- The Game display have 4 differents level of difficulty:
+ The Game have 4 differents level of difficulty:
 * Beginner : User will have to guess a number from 1 to 100
 * Medium : User will have to guess a number from 1 to 500
 * hard : User will have to guess a number from 1 to 1000
@@ -174,9 +174,9 @@ It's a no ending Game, one new Game will be generated after revealing the result
 The score will be registered into the excel file and a new game is loading.
 So if you want to stop playing do the following :
 
-- Press `"n"` when prompt the following message :
+- Press `"q"` when prompt the following message :
 
-![No more gaming](assets/images/readme-images/nomoregaming.png)
+![No more gaming](assets/images/readme-images/nomoregaming1.png)
 
 - Then close the brownser window
 
