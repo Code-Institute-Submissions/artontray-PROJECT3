@@ -39,6 +39,7 @@ def check_database(worksheet):
     """
     try:
         worksheet_to_edit = SHEET.worksheet(worksheet)
+        return True
     except gspread.exceptions.WorksheetNotFound:
         # Worksheet could not open, we create it
         message = f"red:Error, Worksheet could not open.\n"
@@ -51,29 +52,30 @@ def check_database(worksheet):
     return True
         
 
-def register_score(username, time, worksheet):
+def register_score(Player, time):
     """
-    Register / Update username and time into selected worksheet
+    Method to Register / Update username and time into selected worksheet
     - New line in the File if User is not already in the file
     - Update the File with new data if score is better
     """
     message = f"green:Congrats! Your time is {time} sec\n"
     message += "blue:Updating database, please wait......\n"
     my_print(message)
+    check_database(which_worksheet(Player.level))
     # Check if username already in data base
-    worksheet_to_edit = SHEET.worksheet(worksheet)
-    cell = worksheet_to_edit.find(username)
-    if worksheet_to_edit.find(username):
+    worksheet_to_edit = SHEET.worksheet(which_worksheet(Player.level))
+    cell = worksheet_to_edit.find(Player.username)
+    if worksheet_to_edit.find(Player.username):
         # Username already exist
         if (int(time) < int(worksheet_to_edit.cell(cell.row, 2).value)):
-            # We update the Time on excel File only if Time score is better
+            # We update the Time on Excel File only if Time score is better
             worksheet_to_edit.update_cell(cell.row, 2, int(time))
             return "green:New Personal Record!\n"
         else:
             return "blue:No new Personal record this Time!\n"
     else:
         # First Time for this user, we register into Excel File
-        data = [username, int(time)]
+        data = [Player.username, int(time)]
         worksheet_to_edit.append_row(data)
         return "green:Your Score is registered!\n"
 
@@ -88,34 +90,57 @@ def Calcul_time(time_start, time_end):
     return int(time)
 
 
+def blue_string(text):
+    """
+    Return a string in the colour blue
+    """
+    string = f"\033[36;1m{text}\033[0m"
+    # print(len(text))
+    # print(len(string))
+    return string
+
+def green_string(text):
+    """
+    Return a string in the colour green
+    """
+    string = f"\033[32;1m{text}\033[0m"
+    return string
+
+
+def red_string(text):
+    """
+    Return a string in the colour red
+    """
+    string = f"\033[31;1m{text}\033[0m"
+    return string
+
+
 def my_print(message):
     """
     Return an custom print message
-    2 cases :
+    3 cases :
     - Normal strings : will display in the center of the custom box message
     - Strings with ":" which means its a score tab or
     listing tab (example -> Name : score)
+    - Strings with ":" and a color, for example -> red:Error, wrong number!
+    It will return a message in the associated color
     """
-    os.system('clear')
+    os.system('clear') # Clear the screen before a new message
     message = message.splitlines()  # Split the message detecting "\n" caracter
     SIZE = 50  # max letters per line
     print("\n\n\n")
     print("." * (SIZE + 4))
     str_empty = " "
     for i in range(0, len(message)):
-        # For each line of message, we wrap into new
-        # tab if message is bigger than SIZE
+        # wrapping if message is bigger than SIZE
         message_tab = wrap(message[i], SIZE)
         j = 1
         while j <= len(message_tab):
-            # For each line of message_tab
             str = message_tab[j-1]
             j += 1
-            # We detect if existing ":" caracter
-            # If so We split the message in 2 to display it in a nice way
             if str.count(":") == 1:
                 str = str.split(":")
-                a = SIZE + 11
+                a = SIZE + 11 # 11 is the number of caracter around coloring message f"\033[32;1m{text}\033[0m"
                 if str[0] == 'blue':
                     print(f"| {blue_string(str[1]).center(a,' ')} |")
                 elif str[0] == 'red':
@@ -126,11 +151,8 @@ def my_print(message):
                     a = SIZE - len(str[0]) - len(str[1]) - 3
                     # We place an empty string in the center after
                     # each line so "|" will end up always same place
-                    
                     print(f"| {str[0]} : {str[1]}{str_empty.center(a, ' ')} |")
-               
             else:
-                # Normal string displayed middle of the box
                 print(f"| {str.center(SIZE, ' ')} |")
     print("." * (SIZE + 4))
     print("      O     ^__^")
@@ -146,8 +168,7 @@ def my_print(message):
 
 def choose_level():
     """
-    User can choose the level for the game
-    can type 0, 1, 2 or 3
+    Return selected Level chosen by the Player
     """
     message = "blue:Choose your level ?\n"
     message += "0:Beginner\n"
@@ -168,21 +189,20 @@ def choose_level():
             message += "red:Unauthorized Caracter!\n"
     return level_user
 
+
 def clean_username(username):
     """
     Return a clean username without specific caracters
-    """    
-    
-    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " ", "'"]
+    """
+    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " ", "'", "/"]
     for char in char_to_remov:
-        # Deleting some specific caracter
         username = username.replace(char, "")
     return username
 
 
 def get_username():
     """
-    Get username to register into Excel file
+    Method to get username to register into Database
     """
     my_print("blue:Let\'s register your name!\n")
     while True:
@@ -197,11 +217,8 @@ def get_username():
 
 def validate_data(values):
     """
-    Check the username input :
-    Raises ValueError if strings more than 7 Caracters,
-    or empty.
+    Method to check the username input.
     """
-   
     try:
         if len(values) > 7:
             raise ValueError(
@@ -214,7 +231,6 @@ def validate_data(values):
     except ValueError as e:
         my_print(f"{e}, please try again.")
         return False
-
     return True
 
 
@@ -227,7 +243,7 @@ def get_time():
 
 def select_max_number(level):
     """
-    Depending the value of "level", it will return a number max for the range
+    Return a number max for the selected range
     """
     if level == 0:
         nb_max = MAX_NB_LEVEL0
@@ -254,7 +270,8 @@ def random_number(nb_max):
 
 def check_input_user(nb_max):
     """
-    Return the int value if user_input is integer and inside the range
+    Method to check the input value
+    Return the value if user_input is integer and inside the range
     """
     while True:
         try:
@@ -262,18 +279,18 @@ def check_input_user(nb_max):
             if user_input <= nb_max and user_input >= 0:
                 return user_input
             else:
-                raise ValueError(
-                    print(red_string("Enter a number into the range!"))
-                )
-        except ValueError:
-            print(red_string("Error, try again!"))
+                my_print("red:Enter a number into the range!")
+                    
+                
+        except ValueError as e:
+            my_print("red:Unauthorized Caracter, please try again!")
 
 
 def check_result(user_guess_number, number_to_guess):
     """
-    Return True if user guess correctly the number
-    Return "More" if user guess a number smaller than correct number
-    Return "Less" if user guess a number bigger than correct number
+    Return True if user enter the correct number
+    Return "More" if user enter a number smaller than correct number
+    Return "Less" if user enter a number bigger than correct number
     """
     if user_guess_number == number_to_guess:
         return True
@@ -285,8 +302,8 @@ def check_result(user_guess_number, number_to_guess):
 
 def build_timeline(number_to_guess, max_nb):
     """
-    Build up a timeline :
-    Array of 11 numbers from 0 to max_nb with calculated gaps in between
+    Methode to build up a timeline :
+    Return an array of 11 numbers from 0 to max_nb with calculated gaps in between
     example : [0, 31, 62, 93, 124, 155, 224, 293, 362, 431, 500]
     the number to guess will be always in the middle : 155 in this example
     """
@@ -302,24 +319,24 @@ def build_timeline(number_to_guess, max_nb):
     for i in range(0, 4):
         nb += gap_btw_left_side
         timeline.append(nb)
-        # We add the number to guess in the middle of the array
+    # We add the number to guess in the middle of the array
     timeline.append(number_to_guess)
     nb = number_to_guess
     for i in range(0, 4):
         nb += gap_btw_right_side
         timeline.append(nb)
-    # We add the number max_nb at the end of the array
+    # We add the number max_nb at the end
     timeline.append(max_nb)
     return timeline
 
 
 def show_timeline(timeline, input_user):
     """
-    timeline is an array with timeline numbers.
-    input user is the current guess from user.
+    Method to display the timeline.
+    "input user" is the current guess from user.
     We display the current guess number into
     the timeline to show up where is situated
-    the guess in comparation to the number to guess
+    in comparation to the number to guess
     """
     i = 0
     timeline_string = f"blue:You enter the Number {input_user}\n"
@@ -335,7 +352,6 @@ def show_timeline(timeline, input_user):
                 timeline_string += "- "
         if i == 4:
             timeline_string += "# "
-
         i += 1
     timeline_string += "|\n"
     timeline_string += "-"*24 + "\n"
@@ -385,7 +401,7 @@ def which_worksheet(level):
     return worksheet
 
 
-def sort_result(worksheet):
+def sort_result(Player):
     """
     Return a sorted tab by "Time" from a selected worksheet
     This tab will help to build up a scoring tab to show to user
@@ -401,7 +417,7 @@ def sort_result(worksheet):
     [(6, 'dsadsa'), (7, 'trois'), (11, 'fred'), (12, 'deuz'),
     (17, 'quatre'), (22, 'damien')]
     """
-    worksheet_to_sort = SHEET.worksheet(worksheet)
+    worksheet_to_sort = SHEET.worksheet(which_worksheet(Player.level))
     data = worksheet_to_sort.get_all_values()
     number_lines = len(data)
     tab = []
@@ -419,7 +435,7 @@ def sort_result(worksheet):
     return tab
 
 
-def show_scoring(score_tab, worksheet, user):
+def show_scoring(score_tab, Player):
     """
     Return a string with the 5 first all-time record
     if user is not in the list (5 first best players) we 
@@ -427,25 +443,25 @@ def show_scoring(score_tab, worksheet, user):
     his position in the list.
     """
     
-    message = f"Level {worksheet.upper()}\n"
+    message = f"Level {which_worksheet(Player.level).upper()}\n"
     if len(score_tab) == 0:
         # Worksheet empty, nothing to show
         message += "Nothing to show, score tab is empty..."
         return message
     for i in range(0, len(score_tab)):
         if i < 5:
-            if score_tab[i][1] == user:
+            if score_tab[i][1] == Player.username:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
             else:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec\n"
         else:
-            if score_tab[i][1] == user:
+            if score_tab[i][1] == Player.username:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
     return message
 
 
 
-def show_score_tab(user_name):
+def show_score_tab(Player):
     """
     Function that display the score tab for each Level
     """
@@ -460,7 +476,7 @@ def show_score_tab(user_name):
             for i in range(0, 4):
                 check_database(WORKSHEETS[i]) # Checking if worksheet exists
                 score_tab = sort_result(WORKSHEETS[i])
-                result = show_scoring(score_tab, WORKSHEETS[i], user_name)
+                result = show_scoring(score_tab, Player)
                 my_print(result)
                 instruction_command = input(
                     "Press Enter to continue..."
@@ -527,7 +543,18 @@ def instructions():
             my_print("red:That is not a valid option. Please try again!")
 
 
-def main(user_name):
+class User():
+    """
+    Creates an instance of User
+    """
+    def __init__(self, username, level):
+        self.username = username
+        self.level = level
+
+
+
+
+def main(Player):
     """
     Main function of the Game
     1/Get instructions of the game : instructions()
@@ -547,18 +574,18 @@ def main(user_name):
     playing_game = True
     while playing_game:
         instructions()
-        show_score_tab(user_name)
-        user_level = choose_level()
+        
+        show_score_tab(Player)
+        Player.level = choose_level()
         start = get_time()
-        run_game(user_level)
+        run_game(Player.level)
         end = get_time()
         time_on_game = Calcul_time(start, end)
-        worksheet = which_worksheet(user_level)
-        check_database(worksheet)
-        result = register_score(user_name, time_on_game, worksheet)
+
+        result = register_score(Player, time_on_game)
         message = result
-        score_tab = sort_result(worksheet)
-        result = show_scoring(score_tab, worksheet, user_name)
+        score_tab = sort_result(Player)
+        result = show_scoring(score_tab, Player)
         message += result
         my_print(message)
         instruction_command = input("Enter any key to play again or 'q' to quit : \n")
@@ -566,25 +593,9 @@ def main(user_name):
             playing_game = False
             my_print("blue:Thank you for playing! Bye")
 
-def blue_string(text):
-    """ Print a string in the colour blue """
-    string = f"\033[36;1m{text}\033[0m"
-    # print(len(text))
-    # print(len(string))
-    return string
 
-def green_string(text):
-    """ Print a string in the colour green """
-    string = f"\033[32;1m{text}\033[0m"
-    return string
-
-
-def red_string(text):
-    """ Print a string in the colour red """
-    string = f"\033[31;1m{text}\033[0m"
-    return string
 
 # my_print('green:Please enter your name please !\n')
 
-user_name = get_username()
-main(user_name)
+
+main(User(get_username(),0))
