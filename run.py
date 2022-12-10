@@ -4,9 +4,10 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import time
-import os
-from textwrap import wrap
+
+
 from random import randint
+from print import blue_string, green_string, red_string, my_print, welcome_print
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -88,81 +89,6 @@ def Calcul_time(time_start, time_end):
     """
     time = time_end - time_start
     return int(time)
-
-
-def blue_string(text):
-    """
-    Return a string in the colour blue
-    """
-    string = f"\033[36;1m{text}\033[0m"
-    # print(len(text))
-    # print(len(string))
-    return string
-
-def green_string(text):
-    """
-    Return a string in the colour green
-    """
-    string = f"\033[32;1m{text}\033[0m"
-    return string
-
-
-def red_string(text):
-    """
-    Return a string in the colour red
-    """
-    string = f"\033[31;1m{text}\033[0m"
-    return string
-
-
-def my_print(message):
-    """
-    Return an custom print message
-    3 cases :
-    - Normal strings : will display in the center of the custom box message
-    - Strings with ":" which means its a score tab or
-    listing tab (example -> Name : score)
-    - Strings with ":" and a color, for example -> red:Error, wrong number!
-    It will return a message in the associated color
-    """
-    os.system('clear') # Clear the screen before a new message
-    message = message.splitlines()  # Split the message detecting "\n" caracter
-    SIZE = 50  # max letters per line
-    print("\n\n\n")
-    print("." * (SIZE + 4))
-    str_empty = " "
-    for i in range(0, len(message)):
-        # wrapping if message is bigger than SIZE
-        message_tab = wrap(message[i], SIZE)
-        j = 1
-        while j <= len(message_tab):
-            str = message_tab[j-1]
-            j += 1
-            if str.count(":") == 1:
-                str = str.split(":")
-                a = SIZE + 11 # 11 is the number of caracter around coloring message f"\033[32;1m{text}\033[0m"
-                if str[0] == 'blue':
-                    print(f"| {blue_string(str[1]).center(a,' ')} |")
-                elif str[0] == 'red':
-                    print(f"| {red_string(str[1]).center(a,' ')} |")
-                elif str[0] == 'green':
-                    print(f"| {green_string(str[1]).center(a,' ')} |")
-                else:
-                    a = SIZE - len(str[0]) - len(str[1]) - 3
-                    # We place an empty string in the center after
-                    # each line so "|" will end up always same place
-                    print(f"| {str[0]} : {str[1]}{str_empty.center(a, ' ')} |")
-            else:
-                print(f"| {str.center(SIZE, ' ')} |")
-    print("." * (SIZE + 4))
-    print("      O     ^__^")
-    print("        ˚   (oo) _______")
-    print("            (__)  Milka  )--/ ")
-    print("                ||----w|| ")
-    print("                ||     || ")
-    print(green_string("/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ \n"))
-    print("\n")
-
 
 
 
@@ -282,7 +208,7 @@ def check_input_user(nb_max):
                 my_print("red:Enter a number into the range!")
                     
                 
-        except ValueError as e:
+        except ValueError:
             my_print("red:Unauthorized Caracter, please try again!")
 
 
@@ -401,7 +327,7 @@ def which_worksheet(level):
     return worksheet
 
 
-def sort_result(Player):
+def sort_result(worksheet):
     """
     Return a sorted tab by "Time" from a selected worksheet
     This tab will help to build up a scoring tab to show to user
@@ -417,7 +343,8 @@ def sort_result(Player):
     [(6, 'dsadsa'), (7, 'trois'), (11, 'fred'), (12, 'deuz'),
     (17, 'quatre'), (22, 'damien')]
     """
-    worksheet_to_sort = SHEET.worksheet(which_worksheet(Player.level))
+
+    worksheet_to_sort = SHEET.worksheet(which_worksheet(worksheet))
     data = worksheet_to_sort.get_all_values()
     number_lines = len(data)
     tab = []
@@ -435,7 +362,7 @@ def sort_result(Player):
     return tab
 
 
-def show_scoring(score_tab, Player):
+def show_scoring(score_tab, level, username):
     """
     Return a string with the 5 first all-time record
     if user is not in the list (5 first best players) we 
@@ -443,104 +370,119 @@ def show_scoring(score_tab, Player):
     his position in the list.
     """
     
-    message = f"Level {which_worksheet(Player.level).upper()}\n"
+    message = f"Level {which_worksheet(level).upper()}\n"
     if len(score_tab) == 0:
         # Worksheet empty, nothing to show
         message += "Nothing to show, score tab is empty..."
         return message
     for i in range(0, len(score_tab)):
         if i < 5:
-            if score_tab[i][1] == Player.username:
+            if score_tab[i][1] == username:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
             else:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec\n"
         else:
-            if score_tab[i][1] == Player.username:
+            if score_tab[i][1] == username:
                 message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
     return message
 
 
 
-def show_score_tab(Player):
+def show_top5(username):
     """
-    Function that display the score tab for each Level
+    Function that display the top5 players for each Level
     """
-    get_instruction = True
 
-    while get_instruction:
+    for level in range(0, 4):
+        check_database(WORKSHEETS[level]) # Checking if worksheet exists
+        score_tab = sort_result(level)
+        result = show_scoring(score_tab, level, username)
+        my_print(result)
         instruction_command = input(
-            "Do you want to see the top Players? y/n : "
+            "Press Enter to continue..."
             )
-        if instruction_command.lower() == "y":
-            
-            for i in range(0, 4):
-                check_database(WORKSHEETS[i]) # Checking if worksheet exists
-                score_tab = sort_result(WORKSHEETS[i])
-                result = show_scoring(score_tab, Player)
-                my_print(result)
-                instruction_command = input(
-                    "Press Enter to continue..."
-                    )
-        elif instruction_command.lower() == "n":
-            get_instruction = False
-        else:
-            my_print("red:That is not a valid option. Please try again!")
+
 
 
 def instructions():
     """
     Give instructions about the rules of this game
     """
-    get_instruction = True
 
-    while get_instruction:
-        instruction_command = input(
-            "Do you want to see instruction(s) for this game? y/n : "
-            )
-        if instruction_command.lower() == "y":
-            message = "The aim of this game is to guess "
-            message += "a number between a selected range.\n"
-            message += "4 differents levels of difficulty \n"
-            message += "Beginner:1-100\n"
-            message += "Medium:1-500\n"
-            message += "Hard:1-1000\n"
-            message += "Champion:1-10000\n"
-            my_print(message)
-            input("Press Enter to continue.... ")
-            message = "When you have selected your level of difficulty, "
-            message += "blue:Computer choose a number.\n"
-            message += "You can try to guess this number as many time "
-            message += "as you want, but time is running!!\n"
-            message += "blue:Try to be fast to get good scoring!\n"
-            my_print(message)
-            input("Press Enter to continue.... ")
-            message = "blue: Let\'s make an example!\n"
-            message += "The number to guess is 153.\n"
-            timeline = build_timeline(153, 1000)
-            message += show_timeline(timeline, 40)
-            message += "red:It\'s More\n"
-            message += "blue:Computer will display a Timeline as above!\n"
-            message += "On the middle the symbol # is the number to guess\n"
-            message += "The X is showing how far you are from it !\n"
-            my_print(message)
-            input("Press Enter to continue.... ")
-            message = "Let\'s try again! Remember, the number to guess is 153 here!\n"
-            timeline = build_timeline(153, 1000)
-            message += show_timeline(timeline, 160)
-            message += "red:It\'s Less\n"
-            message += "You are very close to discover the number, try again"
-            message += "... and so on...\n"
-            my_print(message)
-            input("Press Enter to continue.... ")
-            message = "When you discovered my number, I will register "
-            message += "your score by calculating your time! \n"
-            message += "Challenge yourself and be the fastest Player on "
-            message += "the score tab!\n"
-            my_print(message)
-        elif instruction_command.lower() == "n":
-            get_instruction = False
-        else:
-            my_print("red:That is not a valid option. Please try again!")
+    message = "The aim of this game is to guess "
+    message += "a number between a selected range.\n"
+    message += "4 differents levels of difficulty \n"
+    message += "Beginner:1-100\n"
+    message += "Medium:1-500\n"
+    message += "Hard:1-1000\n"
+    message += "Champion:1-10000\n"
+    my_print(message)
+    input("Press Enter to continue.... ")
+    message = "When you have selected your level of difficulty, "
+    message += "blue:Computer choose a number.\n"
+    message += "You can try to guess this number as many time "
+    message += "as you want, but time is running!!\n"
+    message += "blue:Try to be fast to get good scoring!\n"
+    my_print(message)
+    input("Press Enter to continue.... ")
+    message = "blue: Let\'s make an example!\n"
+    message += "The number to guess is 153.\n"
+    timeline = build_timeline(153, 1000)
+    message += show_timeline(timeline, 40)
+    message += "red:It\'s More\n"
+    message += "blue:Computer will display a Timeline as above!\n"
+    message += "On the middle the symbol # is the number to guess\n"
+    message += "The X is showing how far you are from it !\n"
+    my_print(message)
+    input("Press Enter to continue.... ")
+    message = "Let\'s try again! Remember, the number to guess is 153 here!\n"
+    timeline = build_timeline(153, 1000)
+    message += show_timeline(timeline, 160)
+    message += "red:It\'s Less\n"
+    message += "You are very close to discover the number, try again"
+    message += "... and so on...\n"
+    my_print(message)
+    input("Press Enter to continue.... ")
+    message = "When you discovered my number, Computer will register "
+    message += "your score by calculating your time! \n"
+    message += "Challenge yourself and be the fastest Player on "
+    message += "the score tab!\n"
+    my_print(message)
+
+
+
+def menu(username):
+    """
+    Method to create a menu with options:
+    - Play Game
+    - See instructions
+    - See the top5 Players Tab score
+    """
+    message = "blue:Choose an option!\n"
+    message += "1:Play Game\n"
+    message += "2:See Instructions of the Game\n"
+    message += "3:See the Top5 Players Score\n"
+    message_original = message
+    while True:
+        my_print(message)
+        message = message_original
+        try:
+            option = int(input("Select an option (1, 2 or 3) : \n"))
+            if (option > 3) or (option < 1):
+                message += "red:Wrong Option!\n"
+            else:
+                if option == 1:
+                    return True
+                if option == 2:
+                    instructions()
+                    menu(username)
+                if option == 3:
+                    show_top5(username)
+                    menu(username)
+        except ValueError:
+            message += "red:Unauthorized Caracter!\n"
+    
+
 
 
 class User():
@@ -573,9 +515,10 @@ def main(Player):
     """
     playing_game = True
     while playing_game:
-        instructions()
+        menu(Player.username)
         
-        show_score_tab(Player)
+        
+        
         Player.level = choose_level()
         start = get_time()
         run_game(Player.level)
@@ -584,11 +527,11 @@ def main(Player):
 
         result = register_score(Player, time_on_game)
         message = result
-        score_tab = sort_result(Player)
-        result = show_scoring(score_tab, Player)
+        score_tab = sort_result(Player.level)
+        result = show_scoring(score_tab, Player.level, Player.username)
         message += result
         my_print(message)
-        instruction_command = input("Enter any key to play again or 'q' to quit : \n")
+        instruction_command = input("Enter any key for main menu or 'q' to quit : \n")
         if instruction_command.lower() == "q":
             playing_game = False
             my_print("blue:Thank you for playing! Bye")
@@ -598,4 +541,7 @@ def main(Player):
 # my_print('green:Please enter your name please !\n')
 
 
+
+
+welcome_print()
 main(User(get_username(),0))
