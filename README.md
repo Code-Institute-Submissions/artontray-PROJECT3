@@ -15,12 +15,12 @@ Sometimes is better a good picture than a big text to explain something :
 ![Main page with Cowsay](assets/images/readme-images/explainthegame.png)
 
 Some basics informations around this game :
-- The player plays against the computer.
+- The user plays against the computer.
 - The player select a level of difficulty which will give to computer a specific range where to select a number
 - Time is starting to run when computer inform the player that a number has been selected
 - The player can guess the computer's number as many time as he wants but time is running
-- The aim is to guess the computer's number in a such short time
-- When the player enter the computer 's number, the Time stops and computer calculates Time on-game
+- The aim is to guess the computer's number as fast as possible!
+- When the player enter the computer 's selected number, the Time stops and computer calculates Time on-game
 - Time is calculated in second and Time on-game will determinate the position of the player into the score tab
 - A message is displayed to show up the player his position in the score tab
 
@@ -71,25 +71,30 @@ This is the final interaction layout of the Game:
 
 ![Main page with Cowsay](assets/images/readme-images/cowsay1.png)
 
-![Main page with Cowsay](assets/images/readme-images/cowsaymain.png)
 
 [Back to top](<#contents>)
 
 ## Structure of the game
 
-Le juste prix game has ONE main page run.py . The [Game](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up asking for a name.
+Le juste prix game has ONE main page run.py . The [Game](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
 
-![Your name](assets/images/readme-images/yourname.png)
+![Welcome](assets/images/readme-images/welcome.png)
+
+![Your name](assets/images/readme-images/yourname1.png)
 
 This name will be registered to Excel file database for scoring tab display (We will see this in details later on in
 this readme file)
 
+A Main menu has been created to give easy access to differents sections :
+- Playing the Game
+- See the instructions of the Game
+- See the top5 players score of each Level of difficulty
 
-An other Box is displayed to allows the user to get to know about the objectives and rules of the Game :
+![Main menu](assets/images/readme-images/cowsaymain1.png)
 
 ![Instructions](assets/images/readme-images/instructions.png)
 
-Press any key to run the instructions....
+Press Enter to run the instructions....
 
 ![Instructions](assets/images/readme-images/instructions1.png)
 

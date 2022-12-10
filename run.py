@@ -46,7 +46,7 @@ def check_database(worksheet):
         message = f"red:Error, Worksheet could not open.\n"
         message += f"blue:Creating worksheet..."
         my_print(message)
-        input("Press Enter to continue...")
+        input("Press Enter to continue...\n")
         worksheet = SHEET.add_worksheet(title=worksheet, rows="500", cols="2")
         data = ['name', 'time']
         worksheet.append_row(data)
@@ -394,12 +394,14 @@ def show_top5(username):
     """
 
     for level in range(0, 4):
+        message = f"blue:Loading '{WORKSHEETS[level]}' score tab, please wait..."
+        my_print(message)
         check_database(WORKSHEETS[level]) # Checking if worksheet exists
         score_tab = sort_result(level)
         result = show_scoring(score_tab, level, username)
         my_print(result)
         instruction_command = input(
-            "Press Enter to continue..."
+            "Press Enter to continue...\n"
             )
 
 
@@ -412,10 +414,10 @@ def instructions():
     message = "The aim of this game is to guess "
     message += "a number between a selected range.\n"
     message += "4 differents levels of difficulty \n"
-    message += "Beginner:1-100\n"
-    message += "Medium:1-500\n"
-    message += "Hard:1-1000\n"
-    message += "Champion:1-10000\n"
+    message += "Beginner:number to guess between 1 and 100\n"
+    message += "Medium:number to guess between 1 and 500\n"
+    message += "Hard:number to guess between 1 and 1000\n"
+    message += "Champion:number to guess between 1 and 10000\n"
     my_print(message)
     input("Press Enter to continue.... \n")
     message = "When you have selected your level of difficulty, "
@@ -514,30 +516,28 @@ def main(Player):
     first : sort_result(worksheet)
     10/We show the scoring tab : show_scoring(score_tab,worksheet,user_name)
     """
-    playing_game = True
-    while playing_game:
-        
-        
-        
-        
-        Player.level = choose_level()
-        start = get_time()
-        run_game(Player.level)
-        end = get_time()
-        time_on_game = Calcul_time(start, end)
 
-        result = register_score(Player, time_on_game)
-        message = result
-        score_tab = sort_result(Player.level)
-        result = show_scoring(score_tab, Player.level, Player.username)
-        message += result
-        my_print(message)
-        instruction_command = input("Press Enter for main menu or 'q' to quit : \n")
-        if instruction_command.lower() == "q":
-            playing_game = False
-            my_print("blue:Thank you for playing! Bye")
-        else:
-            menu(Player)
+        
+        
+        
+    Player.level = choose_level()
+    start = get_time()
+    run_game(Player.level)
+    end = get_time()
+    time_on_game = Calcul_time(start, end)
+
+    result = register_score(Player, time_on_game)
+    message = result
+    score_tab = sort_result(Player.level)
+    result = show_scoring(score_tab, Player.level, Player.username)
+    message += result
+    my_print(message)
+    instruction_command = input("Press Enter for main menu or 'q' to quit : \n")
+    if instruction_command.lower() == "q":
+        my_print("blue:Thank you for playing! Bye")
+        quit() # Stop the Game
+    else:
+        menu(Player) # continue playing
 
 
 

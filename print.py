@@ -4,6 +4,8 @@
 import os
 from textwrap import wrap
 
+NB_LINES_MAX_OUTPUT = 24 # Number of lines maximum for the terminal output
+
 def blue_string(text):
     """
     Return a string in the colour blue
@@ -72,10 +74,9 @@ def my_print(message):
             else:
                 print(f"| {str.center(SIZE, ' ')} |")
     
-    nb_lines += 2 + 11
-    nb_line_max = 24
+    nb_lines += 13 # 13 is the number of lines for the cowsay design below
     print("." * (SIZE + 4))
-    for i in range(0, (nb_line_max - nb_lines)):
+    for i in range(0, (NB_LINES_MAX_OUTPUT - nb_lines)):
         print("       .  ")
     
     print("        .   ^__^")
