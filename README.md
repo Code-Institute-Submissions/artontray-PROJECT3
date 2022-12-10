@@ -31,9 +31,12 @@ Some basics informations around this game :
     * [Wireframes](<#wireframes>)
     * [Structure of the game](<#structure-of-the-game>)
     * [Programming Structure](<#programming-structure>)
+    * [Python Logic](<#python-logic>)
+    * [Data model](<#data-model>)
     * [Design Choices](<#design-choices>)
-    *   [Typography](<#typography>)
-    *   [User stories](<#user-stories>)
+      -   [Typography](<#typography>)
+      -   [Colour Scheme](<#colour-scheme>)
+    * [User stories](<#user-stories>)
 * [**Features**](<#features>)
     * [**Loading a New Game**](<#loading-a-new-game>)
     * [**When is the Game finished**](<#when-is-the-game-finished>)
@@ -69,28 +72,28 @@ From beginning, i wanted to make the game interactive with a custom print functi
 
 This is the final interaction layout of the Game:
 
-![Main page with Cowsay](assets/images/readme-images/cowsay1.png)
+![Main page with Cowsay](assets/images/readme-images/cowsay2.png)
 
 
 [Back to top](<#contents>)
 
 ## Structure of the game
 
-Le juste prix game has ONE main page run.py . The [Game](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
+Le juste prix game has one main page run.py . This [Page](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
 
 ![Welcome](assets/images/readme-images/welcome.png)
 
-![Your name](assets/images/readme-images/yourname1.png)
+![Your name](assets/images/readme-images/yourname2.png)
 
 This name will be registered to Excel file database for scoring tab display (We will see this in details later on in
 this readme file)
 
 A Main menu has been created to give easy access to differents sections :
-- Playing the Game
+- Play Game
 - See the instructions of the Game
 - See the top5 players score of each Level of difficulty
 
-![Main menu](assets/images/readme-images/cowsaymain1.png)
+![Main menu](assets/images/readme-images/cowsaymain2.png)
 
 ![Instructions](assets/images/readme-images/instructions.png)
 
@@ -102,6 +105,8 @@ Press Enter to run the instructions....
 
 ![Instructions](assets/images/readme-images/instructions3.png)
 
+![Instructions](assets/images/readme-images/instructions4.png)
+
 After finishing to read the instructions, the user can start playing!
 
  The Game have 4 differents level of difficulty:
@@ -110,7 +115,31 @@ After finishing to read the instructions, the user can start playing!
 * hard : User will have to guess a number from 1 to 1000
 * Champion : User will have to guess a number from 1 to 10000
 
-![Instructions](assets/images/readme-images/instructions4.png)
+![Instructions](assets/images/readme-images/instructions5.png)
+
+After selecting the level of difficulty, the game starts :
+
+![Instructions](assets/images/readme-images/instructions6.png)
+
+Each time the user type a number, a timeline is displayed with a message :
+
+![Instructions](assets/images/readme-images/instructions7.png)
+
+![Instructions](assets/images/readme-images/instructions8.png)
+
+When user found out the right number, computer stops the time and calculate the time on-game, a message is displayed :
+
+![Instructions](assets/images/readme-images/instructions9.png)
+
+![Instructions](assets/images/readme-images/instructions10.png)
+
+A score tab is displayed with the user's position :
+
+![Instructions](assets/images/readme-images/scoring7.png)
+
+
+
+
 
 [Back to top](<#contents>)
 
@@ -132,6 +161,25 @@ Before starting to code, I wanted to have a big picture of the programming struc
 
 [Back to top](<#contents>)
 
+## Python Logic
+
+I created a graphcet like diagram to get a big picture of all the functions needed for the Game :
+
+![Graphcet](assets/images/readme-images/graphcet1.png)
+
+
+## Data Model
+
+I used [Google Sheets](https://www.google.co.uk/sheets/about/) to store all the data of the game. 
+The Google Sheet have 4 separate worksheets, all of which had a different task. 
+
+* *Beginner* - Used to store users username and time performance in Beginner Level
+* *Medium* - Used to store users username and time performance in Medium Level
+* *Hard* - Used to store users username and time performance in Hard Level
+* *Champion* - Used to store users username and time performance in Champion Level
+
+![excelfile](assets/images/readme-images/excelfile.png)
+
 ## Design Choices
 
  * ### Typography
@@ -139,7 +187,30 @@ Before starting to code, I wanted to have a big picture of the programming struc
       to make it more friendly. In fact, no graphical effects here so the main focus was on creating
       a friendly design to catch the interest from the user...
 
-      ![Terminal design](assets/images/readme-images/terminal.png)
+ * ### Colour Scheme
+      I used 3 differents coloring effect :
+      - Blue : when computer interact with the user
+
+![blue color](assets/images/readme-images/bluecolor.png)
+
+![blue color](assets/images/readme-images/bluecolor2.png)
+
+![blue color](assets/images/readme-images/bluecolor3.png)
+
+      - Green : When an action suceed
+
+![green color](assets/images/readme-images/green.png)
+
+      - Red : When an action failed
+
+![red color](assets/images/readme-images/redcolor.png)
+
+![red color](assets/images/readme-images/redcolor2.png)
+
+
+
+
+
 
 [Back to top](<#contents>)
 
@@ -159,11 +230,8 @@ Considering that there is no possibility to login for the user, the Game is buil
   - The user can come back to this game any time in the future and challenge himself if he used the same username as registered previously
 
 
-![scoring](assets/images/readme-images/scoring3.png)
 
-![scoring](assets/images/readme-images/scoring4.png)
-
-![scoring](assets/images/readme-images/scoring5.png)
+![Instructions](assets/images/readme-images/scoring7.png)
 
 # Features 
 
