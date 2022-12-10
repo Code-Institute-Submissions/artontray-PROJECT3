@@ -81,6 +81,8 @@ This is the final interaction layout of the Game:
 
 Le juste prix game has one main page run.py . This [Page](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
 
+I used this [site](https://patorjk.com/software/taag/#p=testall&c=lua&f=Graffiti&t=WELCOME%20TO%0AJUSTE%20PRIX%0A%0A) to build up this design.
+
 ![Welcome](assets/images/readme-images/welcome.png)
 
 ![Your name](assets/images/readme-images/yourname2.png)
@@ -199,15 +201,13 @@ The Google Sheet have 4 separate worksheets, all of which had a different task.
 
       - Green : When an action suceed
 
-![green color](assets/images/readme-images/green.png)
+![green color](assets/images/readme-images/greencolor.png)
 
       - Red : When an action failed
 
 ![red color](assets/images/readme-images/redcolor.png)
 
 ![red color](assets/images/readme-images/redcolor2.png)
-
-
 
 
 
@@ -227,11 +227,11 @@ First Time Visitor Goals
 Considering that there is no possibility to login for the user, the Game is built in the way that :
   - As long as you perform at least one game, your name and scoring is registered into database
   - if your name is already on the database, your score for each game will be updated (only if user perform a new personal record of course!)
-  - The user can come back to this game any time in the future and challenge himself if he used the same username as registered previously
+  - The user can come back to play this game any time in the future and challenge himself using the same username as registered previously
 
 
 
-![Instructions](assets/images/readme-images/scoring7.png)
+![Instructions](assets/images/readme-images/scoring6.png)
 
 # Features 
 
@@ -242,11 +242,13 @@ The game should have a fun design and is intended for users as an entertainment 
 * ## Loading a New Game
 
   ### How do we start a new Game?
-There is nothing to do, just start the game and give your username.
+To start a new Game :
+- Give your username
+- Choose option 1 in the main menu
+- Select your level of difficulty
+- Game is starting
 
-After the Result of the game has been revealed, a new game is loading only if user wants it :
 
-![New Game](assets/images/readme-images/scoring2.png)
 
 [Back to top](<#contents>)
 
@@ -254,13 +256,12 @@ After the Result of the game has been revealed, a new game is loading only if us
 
   ### How do we stop the Game ?
 
-It's a no ending Game, one new Game will be generated after revealing the result of current game.
-The score will be registered into the excel file and a new game is loading.
-So if you want to stop playing do the following :
+If you want to stop playing do the following :
 
 - Press `"q"` when prompt the following message :
 
-![No more gaming](assets/images/readme-images/nomoregaming1.png)
+
+![No more gaming](assets/images/readme-images/scoring8.png)
 
 - Then close the brownser window
 
@@ -275,15 +276,17 @@ Easy, right? :-D
 * ## Errors
 
   ### A message is displayed
-Each time you type an wrong answer, the Game will guide you to get back on track :
+Each time user type an incorrect input, the Game will guide to get back on tracks :
 
-![Errors](assets/images/readme-images/error6.png)
+![Errors](assets/images/readme-images/error1.png)
 
-![Errors](assets/images/readme-images/error2.png)
+![Errors](assets/images/readme-images/errors2.png)
 
-![Errors](assets/images/readme-images/error3.png)
+![Errors](assets/images/readme-images/errors3.png)
 
-![Errors](assets/images/readme-images/error4.png)
+![Errors](assets/images/readme-images/errors4.png)
+
+![Errors](assets/images/readme-images/errors5.png)
 
 [Back to top](<#contents>)
 
@@ -306,10 +309,16 @@ As a Future Features, it could be interesting for the user to choose himself the
 
 ## Am I responsive App?
 
-- Responsive test from https://ui.dev/amiresponsive :
+- Responsive test from [Responsive designchecker](https://www.responsivedesignchecker.com/) :
 
-![Responsive test from https://ui.dev/amiresponsive](assets/images/readme-images/responsive.png)
+![Responsive test](assets/images/readme-images/responsive1.png)
 
+![Responsive test](assets/images/readme-images/responsive2.png)
+
+* ## Responsiveness Testing
+    * Although this project is not required to be fully responsive, I still conducted responsive tests manually with [Google Chrome DevTools](https://developer.chrome.com/docs/devtools/) and [Responsive Design Checker](https://www.responsivedesignchecker.com/).
+
+    ![Responsive Test Excel Sheet](assets/images/readme-images/responsive-design-checker-image.png)
 
 [Back to top](<#contents>)
 
@@ -353,14 +362,30 @@ To sum up :
 ## Fixed Bug
 
 As i said, I wanted to create an custom print function for this game. It tooks me sometimes 
-to code it proprely because each message you want to display is different to an other.
-Dealing with different type of messages create some problems in the display :
+to code it proprely because each message you want to display can be different to an other.
+Dealing with different type of messages and coloring, this can create some problems in the display :
 
-![Error Layout](assets/images/readme-images/errorlayout.png)
+![Error Layout](assets/images/readme-images/errorlayout1.png)
+
+![Error Layout](assets/images/readme-images/errorlayout2.png)
+
+![Error Layout](assets/images/readme-images/errorlayout3.png)
+
+![Error Layout](assets/images/readme-images/errorlayout4.png)
+
+![Error Layout](assets/images/readme-images/errorlayout5.png)
+
+
 
 Detecting each type of messages to display, I found the way to have a perfect display :
 
-![Good Layout](assets/images/readme-images/goodlayout.png)
+![Good Layout](assets/images/readme-images/goodlayout1.png)
+
+I also find the way to incoporate into the custom print function some coloring doing as the following :
+
+![Adding coloring](assets/images/readme-images/addingcolor1.png)
+
+![Adding coloring](assets/images/readme-images/addingcolor2.png)
 
 [Back to top](<#contents>) 
 
