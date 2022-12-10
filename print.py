@@ -103,6 +103,4 @@ def welcome_print():
     print("                ||----w|| ")
     print("                ||     || ")
     print(green_string("/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ \n"))
-    print("\n\n\n")
-
     input("Press enter to Play...").center
