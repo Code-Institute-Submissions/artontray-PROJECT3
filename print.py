@@ -41,6 +41,7 @@ def my_print(message):
     """
     os.system('clear') # Clear the screen before a new message
     message = message.splitlines()  # Split the message detecting "\n" caracter
+    nb_lines = 0
     SIZE = 50  # max letters per line
     print("\n\n\n")
     print("." * (SIZE + 4))
@@ -49,7 +50,9 @@ def my_print(message):
         # wrapping if message is bigger than SIZE
         message_tab = wrap(message[i], SIZE)
         j = 1
+        
         while j <= len(message_tab):
+            nb_lines += 1
             str = message_tab[j-1]
             j += 1
             if str.count(":") == 1:
@@ -68,14 +71,20 @@ def my_print(message):
                     print(f"| {str[0]} : {str[1]}{str_empty.center(a, ' ')} |")
             else:
                 print(f"| {str.center(SIZE, ' ')} |")
+    
+    nb_lines += 2 + 11
+    nb_line_max = 24
     print("." * (SIZE + 4))
-    print("      O     ^__^")
-    print("        ˚   (oo) _______")
+    for i in range(0, (nb_line_max - nb_lines)):
+        print("       .  ")
+    
+    print("        .   ^__^")
+    print("          . (oo) _______")
     print("            (__)  Milka  )--/ ")
     print("                ||----w|| ")
     print("                ||     || ")
+    print("                ||     || ")
     print(green_string("/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ \n"))
-    print("\n")
 
 
 def welcome_print():

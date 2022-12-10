@@ -417,14 +417,14 @@ def instructions():
     message += "Hard:1-1000\n"
     message += "Champion:1-10000\n"
     my_print(message)
-    input("Press Enter to continue.... ")
+    input("Press Enter to continue.... \n")
     message = "When you have selected your level of difficulty, "
     message += "blue:Computer choose a number.\n"
     message += "You can try to guess this number as many time "
     message += "as you want, but time is running!!\n"
     message += "blue:Try to be fast to get good scoring!\n"
     my_print(message)
-    input("Press Enter to continue.... ")
+    input("Press Enter to continue.... \n")
     message = "blue: Let\'s make an example!\n"
     message += "The number to guess is 153.\n"
     timeline = build_timeline(153, 1000)
@@ -434,7 +434,7 @@ def instructions():
     message += "On the middle the symbol # is the number to guess\n"
     message += "The X is showing how far you are from it !\n"
     my_print(message)
-    input("Press Enter to continue.... ")
+    input("Press Enter to continue.... \n")
     message = "Let\'s try again! Remember, the number to guess is 153 here!\n"
     timeline = build_timeline(153, 1000)
     message += show_timeline(timeline, 160)
@@ -442,24 +442,24 @@ def instructions():
     message += "You are very close to discover the number, try again"
     message += "... and so on...\n"
     my_print(message)
-    input("Press Enter to continue.... ")
+    input("Press Enter to continue.... \n")
     message = "When you discovered my number, Computer will register "
     message += "your score by calculating your time! \n"
-    message += "Challenge yourself and be the fastest Player on "
+    message += "Challenge yourself and be one of the fastest player on "
     message += "the score tab!\n"
     my_print(message)
+    input("Press Enter to continue.... \n")
 
 
-
-def menu(username):
+def menu(Player):
     """
     Method to create a menu with options:
     - Play Game
     - See instructions
     - See the top5 Players Tab score
     """
-    message = f"blue:Welcome {username} !\n"
-    message += "blue:Choose an option!\n"
+    message = f"blue:Welcome {Player.username} !\n"
+    message += "blue:Choose an option\n"
     message += "1:Play Game\n"
     message += "2:See Instructions of the Game\n"
     message += "3:See the Top5 Players Score\n"
@@ -473,13 +473,13 @@ def menu(username):
                 message += "red:Wrong Option!\n"
             else:
                 if option == 1:
-                    return True
+                    main(Player)
                 if option == 2:
                     instructions()
-                    menu(username)
+                    menu(Player)
                 if option == 3:
-                    show_top5(username)
-                    menu(username)
+                    show_top5(Player.username)
+                    menu(Player)
         except ValueError:
             message += "red:Unauthorized Caracter!\n"
     
@@ -516,7 +516,7 @@ def main(Player):
     """
     playing_game = True
     while playing_game:
-        menu(Player.username)
+        
         
         
         
@@ -536,6 +536,8 @@ def main(Player):
         if instruction_command.lower() == "q":
             playing_game = False
             my_print("blue:Thank you for playing! Bye")
+        else:
+            menu(Player)
 
 
 
@@ -545,4 +547,5 @@ def main(Player):
 
 
 welcome_print()
-main(User(get_username(),0))
+menu(User(get_username(),0))
+
