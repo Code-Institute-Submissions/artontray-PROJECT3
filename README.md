@@ -14,6 +14,17 @@ Sometimes is better a good picture than a big text to explain something :
 
 ![Main page with Cowsay](assets/images/readme-images/explainthegame.png)
 
+Some basics informations around this game :
+- The player plays against the computer.
+- The player select a level of difficulty which will give to computer a specific range where to select a number
+- Time is starting to run when computer inform the player that a number has been selected
+- The player can guess the computer's number as many time as he wants but time is running
+- The aim is to guess the computer's number in a such short time
+- When the player enter the computer 's number, the Time stops and computer calculates Time on-game
+- Time is calculated in second and Time on-game will determinate the position of the player into the score tab
+- A message is displayed to show up the player his position in the score tab
+
+
 # Contents
 
 * [**User Experience UX**](<#user-experience-ux>)
@@ -58,7 +69,7 @@ From beginning, i wanted to make the game interactive with a custom print functi
 
 This is the final interaction layout of the Game:
 
-![Main page with Cowsay](assets/images/readme-images/cowsay.png)
+![Main page with Cowsay](assets/images/readme-images/cowsay1.png)
 
 ![Main page with Cowsay](assets/images/readme-images/cowsaymain.png)
 

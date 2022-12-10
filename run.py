@@ -135,9 +135,9 @@ def get_username():
         data_username = input("Enter your name here (7 caracters max): \n")
         data_username = clean_username(data_username)
         if validate_data(data_username):
-            my_print(f"blue:Welcome {data_username} !")
-            break
-    return data_username
+            return data_username
+
+    
 
 
 
@@ -458,7 +458,8 @@ def menu(username):
     - See instructions
     - See the top5 Players Tab score
     """
-    message = "blue:Choose an option!\n"
+    message = f"blue:Welcome {username} !\n"
+    message += "blue:Choose an option!\n"
     message += "1:Play Game\n"
     message += "2:See Instructions of the Game\n"
     message += "3:See the Top5 Players Score\n"
@@ -531,7 +532,7 @@ def main(Player):
         result = show_scoring(score_tab, Player.level, Player.username)
         message += result
         my_print(message)
-        instruction_command = input("Enter any key for main menu or 'q' to quit : \n")
+        instruction_command = input("Press Enter for main menu or 'q' to quit : \n")
         if instruction_command.lower() == "q":
             playing_game = False
             my_print("blue:Thank you for playing! Bye")
