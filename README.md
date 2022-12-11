@@ -45,6 +45,7 @@ Some basics informations around this game :
 * [**Technologies Used**](<#technologies-used>)
 * [**Testing**](<#testing>)
      * [**Am i responsive?**](<#am-i-responsive>)
+     * [**Manual Testing**](<#manual-testing>)
      * [**Python Validator**](<#python>)
      * [**Browser Compatibility**](<#browser-compatibility>)
      * [**Bugs**](<bugs>)
@@ -322,6 +323,69 @@ As a Future Features, it could be interesting for the user to choose himself the
 
 [Back to top](<#contents>)
 
+
+ * ## Manual Testing
+    * In addition to the other tests, I have conducted a manual check list for myself to carry out to make sure that everything is working as intended.
+
+   * ### Manual Tests Conducted
+      * **Startup Display**
+        * Verify that the input for username refused some specific caracter as '\n', '\\' or '"'.
+        * Verify that the username validation is working as intended.
+        * Verify that if the user enters a correct name, they will move to the Main Menu.
+      * **Main Menu**
+        * Verify that the users name is displayed at the top of the page.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+        * Verify that all menu options load as intended only if the user enters the appropriate key.
+      * **Level of difficulty Menu**
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **On Game inputs**
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+        * Verify that the Timeline is correctly displayed.
+        * Verify that the message from computer is clear enough to guide user finding the right number.
+
+
+      * **Score Tab**
+        * Verify that an registered user always appears on the tab score 
+
+        ![Responsive test](assets/images/readme-images/scoretab1.png)
+
+        * Verify that the score tab is displayed correctly
+        * Verify that the sort_tab() function is working correctly and sort the all cells of the selected worksheet by time.
+
+
+      * **Quiz Leaderboards**
+        * Verify that the leaderboards are displayed correctly and only show the top 8 highest scores in order of highest to lowest.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Quiz Statistics**
+        * Verify that the statistics for the quiz are displayed correctly and the numbers are accurate.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Quiz Rules**
+        * Verify that the quiz rules are displayed correctly to the user.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **View F1 Fact**
+        * Verify that only one fact is displayed to the user.
+        * Verify that if the user chooses to load a new fact then a new fact is presented.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Select A Track**
+        * Verify that if the user types in "view list" then the commands are presented to the user.
+        * Verify that if the user types in a correct track name then that specific track data is presented to the user.
+        * Verify that if the user types in "exit" then it will return the user back to the F1 Quiz Hub Menu.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **F1 2022 Calendar**
+        * Verify that the F1 2022 Calendar is presented to the user in the correct order of dates.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **F1 2022 Drivers**
+        * Verify that the F1 2022 Drivers list is presented to the user in the correct order of career points highest to lowest.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Submit Feedback**
+        * Verify that when the user submits feedback, the message is stored within the google sheets database.
+        * Verify that when the user submits feedback, the user is then redirected back to the main menu.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Exit App**
+        * Verify that when the user exits the app, they are presented with a thank you message and then the program shuts down successfully.
+        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+
+
 ## PYTHON VALIDATOR
 
 ### PYTHON
@@ -381,11 +445,50 @@ Detecting each type of messages to display, I found the way to have a perfect di
 
 ![Good Layout](assets/images/readme-images/goodlayout1.png)
 
+Also the black and white screen was hard to display error messages as "Wrong number" or "Try again" or simply get to user focus on a big block of text as below :
+
+![try again](assets/images/readme-images/tryagain.png)
+
+![wrongnumber](assets/images/readme-images/wrongnumber.png)
+
+![Good Layout](assets/images/readme-images/blackandwhite.png)
+
+![Good Layout](assets/images/readme-images/instructions3.png)
+
 I also find the way to incoporate into the custom print function some coloring doing as the following :
 
 ![Adding coloring](assets/images/readme-images/addingcolor1.png)
 
 ![Adding coloring](assets/images/readme-images/addingcolor2.png)
+
+![Adding coloring](assets/images/readme-images/addingcolor3.png)
+
+When I first deploy on Heroku, I could see the final layout of the game and
+i could see that the fixed window space create some distortion on the display. In fact, sometimes, the amount of text on each screen of the game beeing different, the layout can appear far away from the bottom zone and 
+create some problem of visibility :
+
+![Empty space](assets/images/readme-images/emptyspace.png)
+
+For that, I coded some new lines into my custom print function :
+
+
+
+First, I needed to clear the screen on each new call of my custom print function :
+
+![Empty space](assets/images/readme-images/importos.png)
+
+![Empty space](assets/images/readme-images/clearscreen.png)
+
+
+
+After that, I calculated the number of line to print out and knowing the number of lines maximum of this fixed windows, it was easy to build up a for loop to generate the right quantity of lines to end up always on the bottom of the screen.
+
+![Empty space](assets/images/readme-images/codeemptyspace.png)
+
+
+![Empty space](assets/images/readme-images/nomoreemptyspace.png)
+
+
 
 [Back to top](<#contents>) 
 
