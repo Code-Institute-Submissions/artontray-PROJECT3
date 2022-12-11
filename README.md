@@ -2,6 +2,17 @@
 
 This project was developed in order to demonstrate 
 some ability to code in Python.
+I got in mind that I had to get more experience with the following :
+- repetitions with loops
+- Selections
+- Using Modules 
+- Aggregating data such as array and lists
+- Iterations
+- Functions
+- Object-Oriented programming
+- Data structures
+
+The main objective is to demonstrate competency in Python whilst proposing coding an very simple game.
 
 # Le Juste Prix
 
@@ -12,7 +23,14 @@ If you are interested just check this link [here](https://www.youtube.com/watch?
 
 Sometimes is better a good picture than a big text to explain something : 
 
-![Main page with Cowsay](assets/images/readme-images/explainthegame.png)
+
+
+<details><summary><b>Explain the game</b></summary>
+
+![Explain the game](assets/images/readme-images/explainthegame.png)
+</details><br /><br />
+
+
 
 Some basics informations around this game :
 - The user plays against the computer.
@@ -43,6 +61,7 @@ Some basics informations around this game :
     * [**Errors**](<#errors>)
     * [**Future Features**](<#future-features>)
 * [**Technologies Used**](<#technologies-used>)
+* [**Python Packages**](<#python-packages>)
 * [**Testing**](<#testing>)
      * [**Am i responsive?**](<#am-i-responsive>)
      * [**Manual Testing**](<#manual-testing>)
@@ -299,13 +318,34 @@ As a Future Features, it could be interesting for the user to choose himself the
 
 # Technologies Used
 
-* [Python](https://www.python.org/) - provides game's functions and rules.
+
 * [Heroku](https://www.heroku.com/) - used to deploy the Game online.
 * [Gitpod](https://www.gitpod.io/#get-started) - used to get a workspace to use for coding.
 * [Github](https://github.com/) - used to edit the website.
 * [veed](https://www.veed.io/) - used to edit Gif for readme file.
 * [Favicon](https://favicon.io/) - used to create a favicon for the website.
+* [Lucid App](https://lucid.app/) - used to create The logic flow on the application with Graphcet style diagram.
+* [Python](https://en.wikipedia.org/wiki/Python_(programming_language)) - Provides game's functions and rules.
+* [GitBash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) - Terminal used to push changes to the GitHub repository.
+* [Google Chrome DevTools](https://developer.chrome.com/docs/devtools/) - Used to test responsiveness and debug.
+* [Responsive Design Checker](https://www.responsivedesignchecker.com/) - Used to test responsiveness.
+* [Microsoft Excel](https://www.microsoft.com/en-us/microsoft-365/excel) - Used to create spreadsheets to easily view data.
+* [Google Sheets](https://www.google.co.uk/sheets/about/) - Used to host the application data.
+* [VS STUDIO](https://code.visualstudio.com/) was used to edit the code.
+* [Excalidraw](https://excalidraw.com/) to draw the image to describe the game in. first part of this document.
+* [Readme.so](https://readme.so/) was used to write this readme File.
 
+
+
+[Back to top](<#contents>)
+
+# Python Packages
+
+* [GSpread](https://pypi.org/project/gspread/) - Used to transfer data between google sheets.
+* [Random](https://docs.python.org/3/library/random.html) - Used to implement pseudo-random number generators.
+* [OS](https://docs.python.org/3/library/os.html) - Used to provide a way of using operating system dependent functionality.
+* [Time](https://docs.python.org/3/library/time.html) - Used to provide various time-related functions.
+* [Sys](https://docs.python.org/3/library/sys.html) - Used to provide access to some variables used or maintained by the interpreter.
 
 [Back to top](<#contents>)
 
@@ -350,7 +390,7 @@ As a Future Features, it could be interesting for the user to choose himself the
       * **Score Tab**
         * Verify that an registered user always appears on the tab score 
 
-        ![Responsive test](assets/images/readme-images/scoretab1.png)
+        ![Score tab](assets/images/readme-images/scoretab1.png)
 
         * Verify that the score tab is displayed correctly
         * Verify that the sort_tab() function is working correctly and sort the all cells of the selected worksheet by time.
@@ -364,39 +404,13 @@ As a Future Features, it could be interesting for the user to choose himself the
 
         ![Creating Worksheet](assets/images/readme-images/creatingworksheets.gif)
 
-
-
-      * **Quiz Leaderboards**
-        * Verify that the leaderboards are displayed correctly and only show the top 8 highest scores in order of highest to lowest.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **Quiz Statistics**
-        * Verify that the statistics for the quiz are displayed correctly and the numbers are accurate.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **Quiz Rules**
-        * Verify that the quiz rules are displayed correctly to the user.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **View F1 Fact**
-        * Verify that only one fact is displayed to the user.
-        * Verify that if the user chooses to load a new fact then a new fact is presented.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **Select A Track**
-        * Verify that if the user types in "view list" then the commands are presented to the user.
-        * Verify that if the user types in a correct track name then that specific track data is presented to the user.
-        * Verify that if the user types in "exit" then it will return the user back to the F1 Quiz Hub Menu.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **F1 2022 Calendar**
-        * Verify that the F1 2022 Calendar is presented to the user in the correct order of dates.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **F1 2022 Drivers**
-        * Verify that the F1 2022 Drivers list is presented to the user in the correct order of career points highest to lowest.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
-      * **Submit Feedback**
-        * Verify that when the user submits feedback, the message is stored within the google sheets database.
-        * Verify that when the user submits feedback, the user is then redirected back to the main menu.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+      * **Rules of the Game**
+        * Verify that the rules of the game are accessible for every first users.
+        * Verifiy that the rules are easy to understand and well presented
+        * Verify that the rules are explained with a clear example
       * **Exit App**
         * Verify that when the user exits the app, they are presented with a thank you message and then the program shuts down successfully.
-        * Verify that the user receives an invalid input message if an incorrect key has been entered.
+
 
 
 ## PYTHON VALIDATOR
@@ -404,11 +418,36 @@ As a Future Features, it could be interesting for the user to choose himself the
 ### PYTHON
 
 The Python validator results is below:
-- run.py : for testing I used the following tools [here](https://pep8ci.herokuapp.com/) 
+- run.py, print.py : for testing I used the following tools [here](https://pep8ci.herokuapp.com/) 
+
+First try, I got hundreds of warnings :
+
+![warnings](assets/images/readme-images/warnings.png)
+
+However these have now been all fixed because it was only about extra space or too long syntax issues.
 
 No errors detected.
 
 ![Pep8](assets/images/readme-images/pythonchecker.png)
+
+![Pep8](assets/images/readme-images/pythonchecker2.png)
+
+
+### HTML CHECKER
+
+The HTML validator results is below:
+
+No errors detected.
+
+![html](assets/images/readme-images/htmlchecker.png)
+
+### CSS CHECKER
+
+The CSS validator [CSS Validator](https://jigsaw.w3.org/css-validator/) results is below:
+  
+No errors detected.
+
+![css](assets/images/readme-images/csschecker.png)
 
 
 
@@ -425,12 +464,26 @@ Appearance, functionality and responsiveness were consistent throughout for the 
 
 [Back to top](<#contents>)
 
+
+* ## Lighthouse Testing 
+
+    * Furthermore the website has been through the [Chrome Dev Tools](https://developer.chrome.com/docs/devtools/) Lighthouse Testing which tests the website for the following:
+        * Performance - How the page performs whilst loading.
+        * Accessibility - Is the site accessible for all players and how can it be improved.
+        * Best Practices - Site conforms to industry best practices.
+        * SEO - Search Engine Optimisation. Is the site optimised for search engine result rankings.
+
+![lighthouse](assets/images/readme-images/lighthouse.png)
+
+[Back to top](<#contents>)
+
 ### To sum up
 To sum up :
 
 
 - I confirm that the main content of the game is readable and easy to understand.
 - I confirm that the interaction with the user is smooth and efficient with errors management functions.
+
 
 [Back to top](<#contents>) 
 
@@ -686,5 +739,53 @@ The site was deployed to Heroku cloud Platform. To be able to run your python pr
 
   ![deployment](assets/images/readme-images/deploy35.png)
   ![deployment](assets/images/readme-images/deploy36.png)
+
+[Back to top](<#contents>)
+
+# Credits
+### Content and Media
+
+
+* The general custom print function idea came from [Cow Say](https://en.wikipedia.org/wiki/Cowsay)
+* The favicon came from [This site](https://stock.adobe.com/fr/search?k=%22juste+prix%22)
+* The first Welcome Menu ASCII design came from [Patorjk.com](https://patorjk.com/software/taag/#p=testall&c=lua&f=Graffiti&t=WELCOME%20TO%0AJUSTE%20PRIX%0A%0A)
+* General mathematics functions information in Python  came from [This site](https://docs.python.org/3/library/math.html)
+* General Os functions information in Python  came from [This site](https://docs.python.org/3/library/os.html)
+* General path functions information in Python  came from [This site](https://docs.python.org/3/library/os.path.html)
+* General random functions information in Python  came from [This site](https://docs.python.org/3/library/random.html)
+* General information about exceptions in Python  came from [This site](https://docs.python.org/3/library/exceptions.html)
+
+
+
+
+## Best part of this project
+
+To be honest, best parts of my learning progress are the following :
+- Learning Python
+- Learning how to connect an excel File with programming code through API
+- Learning how to deal with exceptions and errors messages
+- Learning how to import external library and incoporate it to my coding
+- Learning Oriented Object programming
+- This function is my favorite one : Asking for an username, creating an Object User and Launching a Menu of option in one line of code!
+
+![Oneline](assets/images/readme-images/oneline.png)
+
+[Back to top](<#contents>)
+
+# Personal Development
+
+That was my first time with python. I instantly enjoyed it so much starting to code with this language. I feel like I understand the fundamentals of Python even I understand that I have only scratched the surface but I understand why it is currently one of the most popular programming language in the world. It's easy readeable and mostly so powerful! I can' t wait to experiment Python in other application as an dynamic database website.
+
+
+[Back to top](<#contents>)
+
+# Acknowledgements
+The site was completed as a Portfolio 3 Project for the Full Stack Software Developer Diploma at the [Code Institute](https://codeinstitute.net/).
+As such I would like to thank the web in general for beeing such an open library for learning, the Slack community for the good vibes and my mentor **Precious_Mentor** for the support.
+
+
+This material has been prepared for educational purposes only.
+
+Damien B.
 
 [Back to top](<#contents>)
