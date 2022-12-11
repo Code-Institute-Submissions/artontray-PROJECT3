@@ -3,7 +3,7 @@
 This project was developed in order to demonstrate 
 some ability to code in Python.
 I got in mind that I had to get more experience with the following :
-- repetitions with loops
+- Repetitions with loops
 - Selections
 - Using Modules 
 - Aggregating data such as array and lists
@@ -12,7 +12,7 @@ I got in mind that I had to get more experience with the following :
 - Object-Oriented programming
 - Data structures
 
-The main objective is to demonstrate competency in Python whilst proposing coding an very simple game.
+The main objective is to demonstrate competency in Python whilst proposing coding an simple game.
 
 # Le Juste Prix
 
@@ -36,7 +36,7 @@ Some basics informations around this game :
 - The user plays against the computer.
 - The player select a level of difficulty which will give to computer a specific range where to select a number
 - Time is starting to run when computer inform the player that a number has been selected
-- The player can guess the computer's number as many time as he wants but time is running
+- The player can try to guess the computer's number as many time as he wants but time is running
 - The aim is to guess the computer's number as fast as possible!
 - When the player enter the computer 's selected number, the Time stops and computer calculates Time on-game
 - Time is calculated in second and Time on-game will determinate the position of the player into the score tab
@@ -70,8 +70,7 @@ Some basics informations around this game :
      * [**Bugs**](<bugs>)
 * [**Deployment**](<#deployment>)
 * [**Credits**](<#credits>)
-    * [**Content**](<#content>)
-    * [**Media**](<#media>)
+    * [**Content And Media**](<#content-and-media>)
     * [**Best part of this project**](<#best-part-of-this-project>)
 *  [**Acknowledgements**](<#acknowledgements>)
 
@@ -169,26 +168,31 @@ A score tab is displayed with the user's position :
 
 Before starting to code, I wanted to have a big picture of the programming structure :
 
- ** Beginning of the Game ** :
-   - 1/Get instructions of the game 
-   - 2/choose the level of the game 
-   - 3/Time is starting to get registered 
-   - 4/Run the Game 
-   - 5/user found the good number, we stop the Time 
-   - 6/Calculate the time on-game 
-   - 7/According the selected level, we select a right worksheet 
-   - 8/We register the data into excel file 
-   - 9/We sort the files by Time value, smaller time is first 
-   - 10/We show the scoring tab 
+ **Beginning of the Game** :
+   - 1/ Get instructions of the game 
+   - 2/ Choose the level of the game 
+   - 3/ Time is starting to get registered 
+   - 4/ Run the Game 
+   - 5/ User found the good number, we stop the Time 
+   - 6/ Calculate the time on-game 
+   - 7/ According the selected level, we select a right worksheet 
+   - 8/ We register the data into excel file 
+   - 9/ We sort the files by Time value, smaller time is first 
+   - 10/ We show the scoring tab 
 
 [Back to top](<#contents>)
 
 ## Python Logic
 
-I created a graphcet like diagram to get a big picture of all the functions needed for the Game :
+I created a graphcet-like diagram to get a big picture of all the functions needed for the Game :
 
 ![Graphcet](assets/images/readme-images/graphcet1.png)
 
+"Fin" means "End" Point on this graph.
+I wanted to change it through the [Lucid Graph Website](https://lucid.app/lucidchart) but then I was limited by the free version, could not modificate anything more on the graph without suscribing for a premium access.
+
+
+[Back to top](<#contents>)
 
 ## Data Model
 
@@ -202,6 +206,8 @@ The Google Sheet have 4 separated worksheets :
 
 ![excelfile](assets/images/readme-images/excelfile.png)
 
+[Back to top](<#contents>)
+
 ## Design Choices
 
  * ### Typography
@@ -209,9 +215,12 @@ The Google Sheet have 4 separated worksheets :
       to make it more friendly. In fact, no graphical effects here so the main focus was on creating
       a friendly design to catch the interest from the user...
 
+[Back to top](<#contents>)
+
  * ### Colour Scheme
       I used 3 differents coloring effect :
-      - Blue : when computer interact with the user
+
+  - Blue : when computer interact with the user
 
 ![blue color](assets/images/readme-images/bluecolor.png)
 
@@ -219,11 +228,11 @@ The Google Sheet have 4 separated worksheets :
 
 ![blue color](assets/images/readme-images/bluecolor3.png)
 
-      - Green : When an action succeed
+  - Green : When an action succeed
 
 ![green color](assets/images/readme-images/greencolor.png)
 
-      - Red : When an action failed
+  - Red : When an action failed
 
 ![red color](assets/images/readme-images/redcolor.png)
 
@@ -234,7 +243,7 @@ The Google Sheet have 4 separated worksheets :
 
 [Back to top](<#contents>)
 
-* ### User stories
+### User stories
 
 First Time Visitor Goals
 
@@ -259,7 +268,7 @@ The game should have a fun design and is intended for users as an entertainment 
 
 [Back to top](<#contents>)
 
-* ## Loading a New Game
+## Loading a New Game
 
   ### How do we start a new Game?
 To start a new Game :
@@ -511,7 +520,7 @@ Detecting each type of messages to display, I found the way to have a perfect di
 
 ![Good Layout](assets/images/readme-images/goodlayout1.png)
 
-Also the black and white screen was hard to display error messages as "Wrong number" or "Try again" or simply get to user focus on a big block of text as below :
+Also the black and white screen was hard to display error messages as "Wrong number" or "Try again" or simply get the user's focus front of a big block of text as below :
 
 ![try again](assets/images/readme-images/tryagain.png)
 
@@ -521,7 +530,7 @@ Also the black and white screen was hard to display error messages as "Wrong num
 
 ![Good Layout](assets/images/readme-images/instructions3.png)
 
-I also find the way to incoporate into the custom print function some coloring doing as the following :
+So, I had to find the way to incoporate into the custom print function some coloring doing as the following :
 
 ![Adding coloring](assets/images/readme-images/addingcolor1.png)
 
@@ -530,7 +539,7 @@ I also find the way to incoporate into the custom print function some coloring d
 ![Adding coloring](assets/images/readme-images/addingcolor3.png)
 
 When I first deploy on Heroku, I could see the final layout of the game and
-i could see that the fixed window space create some distortion on the display. In fact, sometimes, the amount of text on each screen of the game beeing different, the layout can appear far away from the bottom zone and 
+i could see that the fixed window space create some distortion on the display. In fact, the amount of text on each screens of the game can be different, the layout can appear far away from the bottom zone and 
 create some problem of visibility :
 
 ![Empty space](assets/images/readme-images/emptyspace.png)
@@ -766,7 +775,7 @@ To be honest, best parts of my learning progress are the following :
 - Learning how to deal with exceptions and errors messages
 - Learning how to import external library and incoporate it to my coding
 - Learning Oriented Object programming
-- This function is my favorite one : Asking for an username, creating an Object User and Launching a Menu of option in one line of code!
+- This function is my favorite one : Asking for an username through an input, creating an Object called User and Launching a Menu of option in one line of code!
 
 ![Oneline](assets/images/readme-images/oneline.png)
 
