@@ -174,7 +174,7 @@ I created a graphcet like diagram to get a big picture of all the functions need
 ## Data Model
 
 I used [Google Sheets](https://www.google.co.uk/sheets/about/) to store all the data of the game. 
-The Google Sheet have 4 separate worksheets, all of which had a different task. 
+The Google Sheet have 4 separated worksheets :
 
 * *Beginner* - Used to store users username and time performance in Beginner Level
 * *Medium* - Used to store users username and time performance in Medium Level
@@ -200,7 +200,7 @@ The Google Sheet have 4 separate worksheets, all of which had a different task.
 
 ![blue color](assets/images/readme-images/bluecolor3.png)
 
-      - Green : When an action suceed
+      - Green : When an action succeed
 
 ![green color](assets/images/readme-images/greencolor.png)
 
@@ -303,6 +303,9 @@ As a Future Features, it could be interesting for the user to choose himself the
 * [Heroku](https://www.heroku.com/) - used to deploy the Game online.
 * [Gitpod](https://www.gitpod.io/#get-started) - used to get a workspace to use for coding.
 * [Github](https://github.com/) - used to edit the website.
+* [veed](https://www.veed.io/) - used to edit Gif for readme file.
+* [Favicon](https://favicon.io/) - used to create a favicon for the website.
+
 
 [Back to top](<#contents>)
 
@@ -314,7 +317,7 @@ As a Future Features, it could be interesting for the user to choose himself the
 
 ![Responsive test](assets/images/readme-images/responsive1.png)
 
-![Responsive test](assets/images/readme-images/responsive2.png)
+
 
 * ## Responsiveness Testing
     * Although this project is not required to be fully responsive, I still conducted responsive tests manually with [Google Chrome DevTools](https://developer.chrome.com/docs/devtools/) and [Responsive Design Checker](https://www.responsivedesignchecker.com/).
@@ -351,6 +354,16 @@ As a Future Features, it could be interesting for the user to choose himself the
 
         * Verify that the score tab is displayed correctly
         * Verify that the sort_tab() function is working correctly and sort the all cells of the selected worksheet by time.
+        * Verify that the Application is creating missing worksheet needed to register the player's score
+
+        ![Creating Worksheet](assets/images/readme-images/exceptionworksheet.gif)
+
+        ![function check database](assets/images/readme-images/check_database_function.png)
+
+        * Verify that the Application is creating missing worksheet when displaying the top5 players from the main menu
+
+        ![Creating Worksheet](assets/images/readme-images/creatingworksheets.gif)
+
 
 
       * **Quiz Leaderboards**

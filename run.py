@@ -4,10 +4,12 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import time
-
-
 from random import randint
-from print import blue_string, green_string, red_string, my_print, welcome_print
+from print import blue_string
+from print import green_string
+from print import red_string
+from print import my_print
+from print import welcome_print
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -25,6 +27,7 @@ WORKSHEETS = [
     'Hard',
     'Champion'
 ]
+
 # Max Number for selected level of difficulty
 MAX_NB_LEVEL0 = 100
 MAX_NB_LEVEL1 = 500
@@ -35,7 +38,7 @@ MAX_NB_LEVEL3 = 10000
 def check_database(worksheet):
     """
     Method to check Database :
-    If worksheet does not exist we create it
+    If worksheet does not exist, it will be created
     return True if worksheet exist or created successfully
     """
     try:
@@ -51,7 +54,7 @@ def check_database(worksheet):
         data = ['name', 'time']
         worksheet.append_row(data)
     return True
-        
+
 
 def register_score(Player, time):
     """
@@ -81,15 +84,12 @@ def register_score(Player, time):
         return "green:Your Score is registered!\n"
 
 
-
-        
 def Calcul_time(time_start, time_end):
     """
     Return the time in second between time_start and time_end
     """
     time = time_end - time_start
     return int(time)
-
 
 
 def choose_level():
@@ -120,7 +120,9 @@ def clean_username(username):
     """
     Return a clean username without specific caracters
     """
-    char_to_remov = [":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " ", "'", "/"]
+    char_to_remov = [
+        ":", "\\n", "\"", "\\t", "\\b", "\\a", "\\", " ", "'", "/"
+        ]
     for char in char_to_remov:
         username = username.replace(char, "")
     return username
@@ -136,9 +138,6 @@ def get_username():
         data_username = clean_username(data_username)
         if validate_data(data_username):
             return data_username
-
-    
-
 
 
 def validate_data(values):
@@ -169,7 +168,7 @@ def get_time():
 
 def select_max_number(level):
     """
-    Return a number max for the selected range
+    Return a number max for the selected range Level
     """
     if level == 0:
         nb_max = MAX_NB_LEVEL0
@@ -206,8 +205,6 @@ def check_input_user(nb_max):
                 return user_input
             else:
                 my_print("red:Enter a number into the range!")
-                    
-                
         except ValueError:
             my_print("red:Unauthorized Caracter, please try again!")
 
@@ -229,7 +226,8 @@ def check_result(user_guess_number, number_to_guess):
 def build_timeline(number_to_guess, max_nb):
     """
     Methode to build up a timeline :
-    Return an array of 11 numbers from 0 to max_nb with calculated gaps in between
+    Return an array of 11 numbers from 0 to max_nb with
+    calculated gaps in between.
     example : [0, 31, 62, 93, 124, 155, 224, 293, 362, 431, 500]
     the number to guess will be always in the middle : 155 in this example
     """
@@ -306,7 +304,6 @@ def run_game(level):
             message = f"green:YOU WIN, the number was {number_to_guess}\n"
             message += "blue:Calculating your time...\n"
             my_print(message)
-            
             return time.sleep(4)
 
 
@@ -365,27 +362,28 @@ def sort_result(worksheet):
 def show_scoring(score_tab, level, username):
     """
     Return a string with the 5 first all-time record
-    if user is not in the list (5 first best players) we 
-    add his position in the scoring tab with 
+    if user is not in the list (5 first best players) we
+    add his position in the scoring tab with
     his position in the list.
     """
-    
+
     message = f"Level {which_worksheet(level).upper()}\n"
     if len(score_tab) == 0:
         # Worksheet empty, nothing to show
         message += "Nothing to show, score tab is empty..."
         return message
     for i in range(0, len(score_tab)):
+        n = score_tab[i][1]
+        t = score_tab[i][0]
         if i < 5:
             if score_tab[i][1] == username:
-                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
+                message += f"{i+1}:{n} - {t} sec    <--- You\n"
             else:
-                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec\n"
+                message += f"{i+1}:{n} - {t} sec\n"
         else:
             if score_tab[i][1] == username:
-                message += f"{i+1}:{score_tab[i][1]} - {score_tab[i][0]} sec    <--- You\n"
+                message += f"{i+1}:{n} - {t} sec    <--- You\n"
     return message
-
 
 
 def show_top5(username):
@@ -394,16 +392,15 @@ def show_top5(username):
     """
 
     for level in range(0, 4):
-        message = f"blue:Loading '{WORKSHEETS[level]}' score tab, please wait..."
+        message = f"blue:Loading '{WORKSHEETS[level]}' score, please wait..."
         my_print(message)
-        check_database(WORKSHEETS[level]) # Checking if worksheet exists
+        check_database(WORKSHEETS[level])  # Checking if worksheet exists
         score_tab = sort_result(level)
         result = show_scoring(score_tab, level, username)
         my_print(result)
         instruction_command = input(
             "Press Enter to continue...\n"
             )
-
 
 
 def instructions():
@@ -484,8 +481,6 @@ def menu(Player):
                     menu(Player)
         except ValueError:
             message += "red:Unauthorized Caracter!\n"
-    
-
 
 
 class User():
@@ -495,8 +490,6 @@ class User():
     def __init__(self, username, level):
         self.username = username
         self.level = level
-
-
 
 
 def main(Player):
@@ -516,10 +509,6 @@ def main(Player):
     first : sort_result(worksheet)
     10/We show the scoring tab : show_scoring(score_tab,worksheet,user_name)
     """
-
-        
-        
-        
     Player.level = choose_level()
     start = get_time()
     run_game(Player.level)
@@ -532,20 +521,13 @@ def main(Player):
     result = show_scoring(score_tab, Player.level, Player.username)
     message += result
     my_print(message)
-    instruction_command = input("Press Enter for main menu or 'q' to quit : \n")
+    instruction_command = input("Press Enter for main menu or 'q' to quit: \n")
     if instruction_command.lower() == "q":
         my_print("blue:Thank you for playing! Bye")
-        quit() # Stop the Game
+        quit()  # Stop the Game
     else:
-        menu(Player) # continue playing
-
-
-
-# my_print('green:Please enter your name please !\n')
-
-
+        menu(Player)  # continue playinga
 
 
 welcome_print()
-menu(User(get_username(),0))
-
+menu(User(get_username(), 0))
