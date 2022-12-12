@@ -16,6 +16,8 @@ I got in mind that I had to get more experience with followings :
 
 The main objective is to demonstrate competency in Python whilst proposing to code a simple game.
 
+[Check this out](https://lejusteprix.herokuapp.com/)
+
 # Le Juste Prix
 
 This game was very famous in 90' in France. I got inspired by doing a game as the original version of
@@ -131,7 +133,7 @@ Press Enter to run the instructions....
 
 ![Instructions](assets/images/readme-images/instructions1.png)
 
-We introduce an example of one Game so the user get to known more about what is happening
+I introduce an on-game example so the user get to known more about what is happening
 when game starts :
 
 ![Instructions](assets/images/readme-images/instructions2.png)
@@ -200,7 +202,7 @@ I created a graphcet-like diagram to get a big picture of all the functions need
 
 ![Graphcet](assets/images/readme-images/graphcet1.png)
 
-"Fin" (Black circle) means "End" Point on this graph.
+"Fin" (Black circle) means "End" on this graph.
 I wanted to change it through the [Lucid Graph Website](https://lucid.app/lucidchart) but then I was limited by the free version, could not modificate anything more on the graph without suscribing for a premium access.
 
 
@@ -215,6 +217,8 @@ The Google Sheet have 4 separated worksheets :
 * *Medium* - Used to store users username and time performance in Medium Level
 * *Hard* - Used to store users username and time performance in Hard Level
 * *Champion* - Used to store users username and time performance in Champion Level
+
+[Click this link for Google Spreadsheet of this Game](https://docs.google.com/spreadsheets/d/1qtw3ptZlbgvp-eiT1_8UuVNh6PpEY68l-ZJn4-vVrac/edit#gid=867764473)
 
 ![excelfile](assets/images/readme-images/excelfile.png)
 
@@ -262,9 +266,10 @@ First Time Visitor Goals
 
 - As a First Time Visitor, I want immediately to understand the main purpose of the game.
 - I want to be able to quickly understand the game controls and mechanics in order to enjoy playing the game
-- I want to be able to consult the game instructions as many time I want.
+- I want to be able to consult the game instructions as many time as I want.
 - I want to be able to see my score after each game.
 - I would like to play a simple game, with a fairly short play time.
+- I would like to come back in the future and use my username to challenge my previous performing.
 
 Considering that there is no possibility to login for the user, the Game is built in the way that :
   - As long as you perform at least one game, your name and scoring is registered into database
@@ -340,7 +345,11 @@ Each time user type an incorrect input, Game will guide to get back on tracks :
 
   ### Future Features
 
-As a Future Features, it could be interesting for the user to choose himself the range of number to guess...
+As a Future Features:
+- It could be interesting for the user to choose himself the range of number to guess...
+- It could be interesting to register the email adress of the User also. So when his position changes into the tab score he can receive a email as, for example : 
+        `Dear Damien, a User called John has registered a better Time on Level Hard at "Le Juste Prix" Game. Join Now!`
+
 
 [Back to top](<#contents>)
 
@@ -426,11 +435,17 @@ As a Future Features, it could be interesting for the user to choose himself the
 
         ![Creating Worksheet](assets/images/readme-images/exceptionworksheet.gif)
 
+        I 've been using Exceptions to detect the error during opening the Worksheet if not found :
+
+
         ![function check database](assets/images/readme-images/check_database_function.png)
 
-        * Verify that the Application is creating missing worksheet when displaying the top5 players from the main menu
+        * Verify that the Application is creating missing worksheet when displaying the top5 players from the main menu. 
+
 
         ![Creating Worksheet](assets/images/readme-images/creatingworksheets.gif)
+
+      * Verify that a message is displayed if the worksheet is existing but empty.
 
       * **Rules of the Game**
         * Verify that the rules of the game are accessible from first visit users.
@@ -807,13 +822,13 @@ To be honest, best parts of my learning progress are the following :
 
 # Personal Development
 
-That was my first time with python. I instantly enjoyed it so much starting to code with this language. I feel like I understand the fundamentals of Python even I understand that I have only scratched the surface but I understand why it is currently one of the most popular programming language in the world. It's easy readeable and mostly so powerful! I can' t wait to experiment Python in other application as a dynamic database website.
+That was my first time with Python. I instantly enjoyed so much starting to code. I feel like I 've been through the fundamentals of Python even If I still feel that I have only scratched the surface but I understand why it is currently one of the most popular programming language in the world. It's easy readeable and mostly so powerful! I can' t wait to experiment Python in other application as a dynamic database website.
 
 
 [Back to top](<#contents>)
 
 # Acknowledgements
-The site was completed as a Portfolio 3 Project for the Full Stack Software Developer Diploma at the [Code Institute](https://codeinstitute.net/).
+The Game was completed as a Portfolio 3 Project for the Full Stack Software Developer Diploma at the [Code Institute](https://codeinstitute.net/).
 As such I would like to thank the web in general for beeing such an open library for learning, the Slack community for the good vibes and my mentor **Precious_Mentor** for the support.
 
 
