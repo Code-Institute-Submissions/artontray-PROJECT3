@@ -11,8 +11,9 @@ I got in mind that I had to get more experience with the following :
 - Functions
 - Object-Oriented programming
 - Data structures
+- API keys
 
-The main objective is to demonstrate competency in Python whilst proposing coding an simple game.
+The main objective is to demonstrate competency in Python whilst proposing to code a simple game.
 
 # Le Juste Prix
 
@@ -34,13 +35,13 @@ Sometimes is better a good picture than a big text to explain something :
 
 Some basics informations around this game :
 - The user plays against the computer.
-- The player select a level of difficulty which will give to computer a specific range where to select a number
-- Time is starting to run when computer inform the player that a number has been selected
-- The player can try to guess the computer's number as many time as he wants but time is running
+- The user select a level of difficulty which will give to computer a specific range where to select a number
+- Timer is starting to run when computer inform the user that a number has been selected
+- The user can try to guess the computer's number as many time as he wants but time is running
 - The aim is to guess the computer's number as fast as possible!
-- When the player enter the computer 's selected number, the Time stops and computer calculates Time on-game
-- Time is calculated in second and Time on-game will determinate the position of the player into the score tab
-- A message is displayed to show up the player his position in the score tab
+- When the user enter the right computer's selected number, the Timer stops and computer calculates Time on-game
+- Time is calculated in second and Time on-game will determinate the player's position into the score tab
+- A message is displayed to show up the player's position in the score tab
 
 
 # Contents
@@ -65,9 +66,9 @@ Some basics informations around this game :
 * [**Testing**](<#testing>)
      * [**Am i responsive?**](<#am-i-responsive>)
      * [**Manual Testing**](<#manual-testing>)
-     * [**Python Validator**](<#python>)
+     * [**Python/HTML/CSS Validator**](<#python>)
      * [**Browser Compatibility**](<#browser-compatibility>)
-     * [**Bugs**](<bugs>)
+     * [**Bugs**](<#bugs>)
 * [**Deployment**](<#deployment>)
 * [**Credits**](<#credits>)
     * [**Content And Media**](<#content-and-media>)
@@ -99,8 +100,13 @@ This is the final interaction layout of the Game:
 ## Structure of the game
 
 Le juste prix game has one main page run.py . This [Page](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
+The main page run.py is calling an other page called print.py for :
+- printing out a welcome message : welcome_print()
+- printing out messages to the user : my_print()
+- printing out some coloring messages : red_string(text), green_string(text), blue_string(text)
 
-I used this [site](https://patorjk.com/software/taag/#p=testall&c=lua&f=Graffiti&t=WELCOME%20TO%0AJUSTE%20PRIX%0A%0A) to build up this design.
+
+I used this [site](https://patorjk.com/software/taag/#p=testall&c=lua&f=Graffiti&t=WELCOME%20TO%0AJUSTE%20PRIX%0A%0A) to build up this following ASCII design.
 
 ![Welcome](assets/images/readme-images/welcome.png)
 
@@ -112,7 +118,7 @@ this readme file)
 A Main menu has been created to give easy access to differents sections :
 - Play Game
 - See the instructions of the Game
-- See the top5 players score of each Level of difficulty
+- See the top5 players score for each Level of difficulty
 
 ![Main menu](assets/images/readme-images/cowsaymain2.png)
 
@@ -121,6 +127,9 @@ A Main menu has been created to give easy access to differents sections :
 Press Enter to run the instructions....
 
 ![Instructions](assets/images/readme-images/instructions1.png)
+
+We introduce an example of one Game so the user get to known more about what is happening
+when game starts :
 
 ![Instructions](assets/images/readme-images/instructions2.png)
 
@@ -169,16 +178,16 @@ A score tab is displayed with the user's position :
 Before starting to code, I wanted to have a big picture of the programming structure :
 
  **Beginning of the Game** :
-   - 1/ Get instructions of the game 
+   - 1/ Give instructions of the game 
    - 2/ Choose the level of the game 
-   - 3/ Time is starting to get registered 
+   - 3/ Timer start to run 
    - 4/ Run the Game 
-   - 5/ User found the good number, we stop the Time 
+   - 5/ User found the good number, we stop the Timer 
    - 6/ Calculate the time on-game 
-   - 7/ According the selected level, we select a right worksheet 
+   - 7/ According the selected level, we select the right worksheet 
    - 8/ We register the data into excel file 
    - 9/ We sort the files by Time value, smaller time is first 
-   - 10/ We show the scoring tab 
+   - 10/ We shows the scoring tab 
 
 [Back to top](<#contents>)
 
@@ -188,7 +197,7 @@ I created a graphcet-like diagram to get a big picture of all the functions need
 
 ![Graphcet](assets/images/readme-images/graphcet1.png)
 
-"Fin" means "End" Point on this graph.
+"Fin" (Black circle) means "End" Point on this graph.
 I wanted to change it through the [Lucid Graph Website](https://lucid.app/lucidchart) but then I was limited by the free version, could not modificate anything more on the graph without suscribing for a premium access.
 
 
@@ -211,14 +220,15 @@ The Google Sheet have 4 separated worksheets :
 ## Design Choices
 
  * ### Typography
-      The game beeing only running with a terminal design, i wanted to create a custom print function 
-      to make it more friendly. In fact, no graphical effects here so the main focus was on creating
+
+      The game beeing only running with a terminal design, i wanted to create a custom print function to make it more friendly. In fact, no graphical effects here so the main focus was on creating
       a friendly design to catch the interest from the user...
 
 [Back to top](<#contents>)
 
+
  * ### Colour Scheme
-      I used 3 differents coloring effect :
+      I used 3 differents coloring effects :
 
   - Blue : when computer interact with the user
 
@@ -228,11 +238,11 @@ The Google Sheet have 4 separated worksheets :
 
 ![blue color](assets/images/readme-images/bluecolor3.png)
 
-  - Green : When an action succeed
+  - Green : When an action have succeed
 
 ![green color](assets/images/readme-images/greencolor.png)
 
-  - Red : When an action failed
+- Red : When an action failed
 
 ![red color](assets/images/readme-images/redcolor.png)
 
@@ -281,7 +291,7 @@ To start a new Game :
 
 [Back to top](<#contents>)
 
-* ## When is the game finished
+ ## When is the game finished
 
   ### How do we stop the Game ?
 
@@ -291,6 +301,12 @@ If you want to stop playing do the following :
 
 
 ![No more gaming](assets/images/readme-images/scoring8.png)
+
+
+OR
+Click the following button : 
+
+![No more gaming](assets/images/readme-images/scoring9.png)
 
 - Then close the brownser window
 
@@ -305,7 +321,7 @@ Easy, right? :-D
 * ## Errors
 
   ### A message is displayed
-Each time user type an incorrect input, the Game will guide to get back on tracks :
+Each time user type an incorrect input, Game will guide to get back on tracks :
 
 ![Errors](assets/images/readme-images/error1.png)
 
@@ -351,10 +367,10 @@ As a Future Features, it could be interesting for the user to choose himself the
 # Python Packages
 
 * [GSpread](https://pypi.org/project/gspread/) - Used to transfer data between google sheets.
-* [Random](https://docs.python.org/3/library/random.html) - Used to implement pseudo-random number generators.
-* [OS](https://docs.python.org/3/library/os.html) - Used to provide a way of using operating system dependent functionality.
+* [Randint](https://docs.python.org/3/library/random.html) - Used to implement pseudo-random number generators.
+* [OS](https://docs.python.org/3/library/os.html) - Used to provide a way of using operating system dependent functionality. Clear the screen output for example.
 * [Time](https://docs.python.org/3/library/time.html) - Used to provide various time-related functions.
-* [Sys](https://docs.python.org/3/library/sys.html) - Used to provide access to some variables used or maintained by the interpreter.
+* [Wrap](https://docs.python.org/3/library/textwrap.html?highlight=wrap#module-textwrap) - Used for editing strings structure.
 
 [Back to top](<#contents>)
 
@@ -381,7 +397,7 @@ As a Future Features, it could be interesting for the user to choose himself the
 
    * ### Manual Tests Conducted
       * **Startup Display**
-        * Verify that the input for username refused some specific caracter as '\n', '\\' or '"'.
+        * Verify that the input for username refuses some specific caracter as '\n', '\\' or '"'.
         * Verify that the username validation is working as intended.
         * Verify that if the user enters a correct name, they will move to the Main Menu.
       * **Main Menu**
@@ -397,7 +413,7 @@ As a Future Features, it could be interesting for the user to choose himself the
 
 
       * **Score Tab**
-        * Verify that an registered user always appears on the tab score 
+        * Verify that an registered user always appears on the tab score even not in top5 players.
 
         ![Score tab](assets/images/readme-images/scoretab1.png)
 
@@ -414,11 +430,11 @@ As a Future Features, it could be interesting for the user to choose himself the
         ![Creating Worksheet](assets/images/readme-images/creatingworksheets.gif)
 
       * **Rules of the Game**
-        * Verify that the rules of the game are accessible for every first users.
+        * Verify that the rules of the game are accessible from first visit users.
         * Verifiy that the rules are easy to understand and well presented
         * Verify that the rules are explained with a clear example
       * **Exit App**
-        * Verify that when the user exits the app, they are presented with a thank you message and then the program shuts down successfully.
+        * Verify that when the user exits the app, a message is displayed with a thank you message and then the program shuts down successfully.
 
 
 
@@ -435,11 +451,13 @@ First try, I got hundreds of warnings :
 
 However these have now been all fixed because it was only about extra space or too long syntax issues.
 
-No errors detected.
+No errors detected for both files.
 
 ![Pep8](assets/images/readme-images/pythonchecker.png)
 
 ![Pep8](assets/images/readme-images/pythonchecker2.png)
+
+[Back to top](<#contents>)
 
 
 ### HTML CHECKER
@@ -452,7 +470,7 @@ No errors detected.
 
 ### CSS CHECKER
 
-The CSS validator [CSS Validator](https://jigsaw.w3.org/css-validator/) results is below:
+The  [CSS Validator](https://jigsaw.w3.org/css-validator/) results is below:
   
 No errors detected.
 
@@ -500,9 +518,8 @@ To sum up :
 
 ## Fixed Bug
 
-As i said, I wanted to create an custom print function for this game. It tooks me sometimes 
-to code it proprely because each message you want to display can be different to an other.
-Dealing with different type of messages and coloring, this can create some problems in the display :
+As i said in the first part of this document, I wanted to create an custom print function for this game. It tooks me some good time to code it properly because each message to display can be different to an other (structure, coloring, scoring tab etc...)
+Dealing with different type of messages as coloring or score tab can create some problems in the display :
 
 ![Error Layout](assets/images/readme-images/errorlayout1.png)
 
@@ -528,6 +545,8 @@ Also the black and white screen was hard to display error messages as "Wrong num
 
 ![Good Layout](assets/images/readme-images/blackandwhite.png)
 
+Big blocks of text looks better like this :
+
 ![Good Layout](assets/images/readme-images/instructions3.png)
 
 So, I had to find the way to incoporate into the custom print function some coloring doing as the following :
@@ -536,15 +555,17 @@ So, I had to find the way to incoporate into the custom print function some colo
 
 ![Adding coloring](assets/images/readme-images/addingcolor2.png)
 
+Then i could add some coloring text depending the situation :
+
 ![Adding coloring](assets/images/readme-images/addingcolor3.png)
 
-When I first deploy on Heroku, I could see the final layout of the game and
+When I first deployed on Heroku, I could finally see the layout of the game and
 i could see that the fixed window space create some distortion on the display. In fact, the amount of text on each screens of the game can be different, the layout can appear far away from the bottom zone and 
 create some problem of visibility :
 
 ![Empty space](assets/images/readme-images/emptyspace.png)
 
-For that, I coded some new lines into my custom print function :
+For that, I added some new lines into my custom print function :
 
 
 
@@ -556,7 +577,7 @@ First, I needed to clear the screen on each new call of my custom print function
 
 
 
-After that, I calculated the number of line to print out and knowing the number of lines maximum of this fixed windows, it was easy to build up a for loop to generate the right quantity of lines to end up always on the bottom of the screen.
+After that, I calculated the number of lines to print out and knowing the maximum's number of lines (80 characters wide and 24 rows high) of this fixed windows, it was easy to build up a `for loop` to generate the right quantity of lines to end up always on the bottom of the screen.
 
 ![Empty space](assets/images/readme-images/codeemptyspace.png)
 
@@ -783,7 +804,7 @@ To be honest, best parts of my learning progress are the following :
 
 # Personal Development
 
-That was my first time with python. I instantly enjoyed it so much starting to code with this language. I feel like I understand the fundamentals of Python even I understand that I have only scratched the surface but I understand why it is currently one of the most popular programming language in the world. It's easy readeable and mostly so powerful! I can' t wait to experiment Python in other application as an dynamic database website.
+That was my first time with python. I instantly enjoyed it so much starting to code with this language. I feel like I understand the fundamentals of Python even I understand that I have only scratched the surface but I understand why it is currently one of the most popular programming language in the world. It's easy readeable and mostly so powerful! I can' t wait to experiment Python in other application as a dynamic database website.
 
 
 [Back to top](<#contents>)
