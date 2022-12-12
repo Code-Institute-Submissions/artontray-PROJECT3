@@ -2,7 +2,7 @@
 
 This project was developed in order to demonstrate 
 some ability to code in Python.
-I got in mind that I had to get more experience with the following :
+I got in mind that I had to get more experience with followings :
 - Repetitions with loops
 - Selections
 - Using Modules 
@@ -11,6 +11,7 @@ I got in mind that I had to get more experience with the following :
 - Functions
 - Object-Oriented programming
 - Data structures
+- Exceptions and error management
 - API keys
 
 The main objective is to demonstrate competency in Python whilst proposing to code a simple game.
@@ -18,7 +19,7 @@ The main objective is to demonstrate competency in Python whilst proposing to co
 # Le Juste Prix
 
 This game was very famous in 90' in France. I got inspired by doing a game as the original version of
-"Le Juste Prix"
+"Le Juste Prix" except the fact that instead playing with prices, we plays with numbers.
 
 If you are interested just check this link [here](https://www.youtube.com/watch?v=km34cI20HHw)
 
@@ -40,7 +41,7 @@ Some basics informations around this game :
 - The user can try to guess the computer's number as many time as he wants but time is running
 - The aim is to guess the computer's number as fast as possible!
 - When the user enter the right computer's selected number, the Timer stops and computer calculates Time on-game
-- Time is calculated in second and Time on-game will determinate the player's position into the score tab
+- Time is calculated in second as unit and Time on-game will determinate the player's position into the score tab
 - A message is displayed to show up the player's position in the score tab
 
 
@@ -99,7 +100,7 @@ This is the final interaction layout of the Game:
 
 ## Structure of the game
 
-Le juste prix game has one main page run.py . This [Page](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
+Le "juste prix" game has one main page called run.py . This [Page](https://lejusteprix.herokuapp.com/) is the default loading page. When first loading, a box pops up displaying a welcome message . Next box, the user will be invited to register an username.
 The main page run.py is calling an other page called print.py for :
 - printing out a welcome message : welcome_print()
 - printing out messages to the user : my_print()
@@ -121,6 +122,8 @@ A Main menu has been created to give easy access to differents sections :
 - See the top5 players score for each Level of difficulty
 
 ![Main menu](assets/images/readme-images/cowsaymain2.png)
+
+Going through Instructions :
 
 ![Instructions](assets/images/readme-images/instructions.png)
 

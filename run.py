@@ -285,8 +285,9 @@ def show_timeline(timeline, input_user):
 def run_game(level):
     """
     Main function of the Game
-    select a Random number according level attribute
-    prompt for user to guess the number
+    - select a Random number according level attribute
+    - prompt for user to guess the number
+    - Print a message according result
     """
     nb_max = select_max_number(level)
     number_to_guess = random_number(nb_max)
@@ -329,16 +330,18 @@ def sort_result(worksheet):
     Return a sorted tab by "Time" from a selected worksheet
     This tab will help to build up a scoring tab to show to user
     example :
-    - from worksheet_to_sort.get() function we have a following result :
+    - worksheet_to_sort.get() function gives the following result :
     [['damien']] [['22']]
     [['deuz']] [['12']]
     [['trois']] [['7']]
     [['quatre']] [['17']]
     [['fred']] [['11']]
     [['dsadsa']] [['6']]
-    - This function will return a sorted list as the following result
+    Time is stored as a string so impossible to sort it as it is.
+    - This function will return a sorted list as the following :
     [(6, 'dsadsa'), (7, 'trois'), (11, 'fred'), (12, 'deuz'),
-    (17, 'quatre'), (22, 'damien')]
+    (17, 'quatre'), (22, 'damien')] and Time is an Integer that
+    can be sorted.
     """
 
     worksheet_to_sort = SHEET.worksheet(which_worksheet(worksheet))
@@ -362,6 +365,7 @@ def sort_result(worksheet):
 def show_scoring(score_tab, level, username):
     """
     Return a string with the 5 first all-time record
+    into a selected level.
     if user is not in the list (5 first best players) we
     add his position in the scoring tab with
     his position in the list.
@@ -390,7 +394,6 @@ def show_top5(username):
     """
     Function that display the top5 players for each Level
     """
-
     for level in range(0, 4):
         message = f"blue:Loading '{WORKSHEETS[level]}' score, please wait..."
         my_print(message)
@@ -407,14 +410,13 @@ def instructions():
     """
     Give instructions about the rules of this game
     """
-
     message = "The aim of this game is to guess "
     message += "a number between a selected range.\n"
     message += "4 differents levels of difficulty \n"
-    message += "Beginner:number to guess between 1 and 100\n"
-    message += "Medium:number to guess between 1 and 500\n"
-    message += "Hard:number to guess between 1 and 1000\n"
-    message += "Champion:number to guess between 1 and 10000\n"
+    message += f"Beginner:number to guess between 1 and {MAX_NB_LEVEL0}\n"
+    message += f"Medium:number to guess between 1 and {MAX_NB_LEVEL1}\n"
+    message += f"Hard:number to guess between 1 and {MAX_NB_LEVEL2}\n"
+    message += f"Champion:number to guess between 1 and {MAX_NB_LEVEL3}\n"
     my_print(message)
     input("Press Enter to continue.... \n")
     message = "When you have selected your level of difficulty, "
@@ -495,38 +497,33 @@ class User():
 def main(Player):
     """
     Main function of the Game
-    1/Get instructions of the game : instructions()
-    2/choose the level of the game : choose_level()
-    3/Time is starting to get registered : start = get_time()
-    4/Run the Game : run_game(user_level)
-    5/user found the good number, we stop the Time : end = get_time()
-    6/Calculate the time on-game : Calcul_time(start, end)
-    7/According the selected level, we select a right
-    worksheet : which_worksheet(user_level)
-    8/We register the data into excel file : register_score(user_name,
+    1/ Choose the level of the game : choose_level()
+    2/ Time is starting to get registered : start = get_time()
+    3/ Run the Game : run_game(user_level)
+    4/ user enter the good number, we stop the Time : end = get_time()
+    5/ Calculate the time on-game : Calcul_time(start, end)
+    6/ We register the data into excel file : register_score(user_name,
     time_on_game,worksheet)
-    9/We sort the files by Time value, smaller time is
-    first : sort_result(worksheet)
-    10/We show the scoring tab : show_scoring(score_tab,worksheet,user_name)
+    7/ We sort the files by Time value, smaller time is
+    first : sort_result(Player.level)
+    8/ We show the scoring tab : show_scoring()
+    9/ Main menu called : menu(Player)
     """
     Player.level = choose_level()
     start = get_time()
     run_game(Player.level)
     end = get_time()
     time_on_game = Calcul_time(start, end)
-
-    result = register_score(Player, time_on_game)
-    message = result
+    message = register_score(Player, time_on_game)
     score_tab = sort_result(Player.level)
-    result = show_scoring(score_tab, Player.level, Player.username)
-    message += result
+    message += show_scoring(score_tab, Player.level, Player.username)
     my_print(message)
     instruction_command = input("Press Enter for main menu or 'q' to quit: \n")
     if instruction_command.lower() == "q":
         my_print("blue:Thank you for playing! Bye")
         quit()  # Stop the Game
     else:
-        menu(Player)  # continue playinga
+        menu(Player)  # continue playing
 
 
 welcome_print()
